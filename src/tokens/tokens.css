@@ -1,0 +1,157 @@
+/* Lovarch Design System V8 — Tokens
+   Source of truth for HSL color tokens (light + dark), shadows, radius, transitions.
+   Consumer apps must import this BEFORE @tailwind directives.
+*/
+
+@layer base {
+  :root {
+    /* DS V8 Light Mode — Warm White (#FAF9F7) */
+    --primary: 240 6% 10%;
+    --primary-foreground: 0 0% 98%;
+    --primary-light: 240 5% 26%;
+    --primary-dark: 240 6% 6%;
+
+    /* Secondary */
+    --secondary: 40 12% 95%;
+    --secondary-foreground: 240 6% 10%;
+
+    /* Accent — Gold (#A16207) */
+    --accent: 38 90% 33%;
+    --accent-foreground: 0 0% 100%;
+    --accent-light: 40 64% 55%;
+
+    /* Background — Warm White */
+    --background: 40 27% 97%;
+    --foreground: 240 6% 10%;
+    --card: 33 10% 95%;
+    --card-foreground: 240 6% 10%;
+
+    /* Muted & Border */
+    --muted: 33 10% 93%;
+    --muted-foreground: 25 5% 33%;
+    --border: 0 0% 89%;
+    --input: 33 10% 95%;
+    --ring: 38 90% 33%;
+
+    /* State Colors */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+
+    /* Popover & Tooltip */
+    --popover: 40 27% 97%;
+    --popover-foreground: 240 6% 10%;
+
+    /* Sidebar */
+    --sidebar-background: 33 16% 94%;
+    --sidebar-foreground: 240 6% 10%;
+    --sidebar-primary: 240 6% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 38 90% 33%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 89%;
+    --sidebar-ring: 38 90% 33%;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(0 0% 0% / 0.04);
+    --shadow-md: 0 4px 6px -1px hsl(0 0% 0% / 0.06);
+    --shadow-lg: 0 10px 15px -3px hsl(0 0% 0% / 0.06);
+    --shadow-xl: 0 20px 25px -5px hsl(0 0% 0% / 0.08);
+    --shadow-glow: 0 0 20px hsl(38 90% 33% / 0.08);
+    --prompt-shadow: 0 4px 24px rgba(0,0,0,0.12), 0 0 60px rgba(161,98,7,0.04);
+
+    /* Border Radius */
+    --radius: 0.75rem;
+    --radius-sm: 0.5rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
+
+    /* Transitions */
+    --transition-smooth: all 0.26s cubic-bezier(0.2, 0, 0, 1);
+    --transition-fast: all 0.15s ease-out;
+    --transition-reveal: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+
+    /* Semantic surfaces — Light */
+    --surface: rgba(0,0,0,0.025);
+    --surface-hover: rgba(0,0,0,0.045);
+    --surface-active: rgba(0,0,0,0.06);
+    --accent-bg: rgba(161,98,7,0.10);
+    --border-hover: rgba(0,0,0,0.15);
+    --text-dim: #78716C;
+    --text-ghost: #A8A29E;
+    --accent-text: #92400E;
+    --bg-nav: rgba(250,249,247,0.92);
+    --icon-bg: rgba(0,0,0,0.04);
+    --icon-border: rgba(0,0,0,0.06);
+    --positive: #16A34A;
+    --positive-bg: rgba(22,163,74,0.08);
+    --negative: #DC2626;
+    --negative-bg: rgba(220,38,38,0.08);
+  }
+
+  .dark {
+    /* DS V8 Dark Mode — #09090B base + Gold accent */
+    --background: 240 10% 4%;
+    --foreground: 240 7% 94%;
+
+    --card: 240 5% 7%;
+    --card-foreground: 240 7% 94%;
+
+    --muted: 240 4% 11%;
+    --muted-foreground: 240 5% 65%;
+
+    --border: 240 3% 13%;
+    --input: 240 4% 10%;
+
+    --primary: 240 7% 94%;
+    --primary-foreground: 240 10% 4%;
+    --primary-light: 0 0% 100%;
+    --primary-dark: 240 5% 80%;
+
+    --secondary: 240 4% 11%;
+    --secondary-foreground: 240 7% 94%;
+
+    --accent: 38 90% 33%;
+    --accent-foreground: 240 7% 94%;
+    --accent-light: 40 64% 55%;
+
+    --destructive: 0 84% 60%;
+    --warning: 38 92% 50%;
+    --success: 142 71% 45%;
+
+    --popover: 240 5% 7%;
+    --popover-foreground: 240 7% 94%;
+
+    --sidebar-background: 240 14% 4%;
+    --sidebar-foreground: 240 7% 94%;
+    --sidebar-primary: 240 7% 94%;
+    --sidebar-primary-foreground: 240 10% 4%;
+    --sidebar-accent: 38 90% 33%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 240 3% 11%;
+    --ring: 38 90% 33%;
+
+    --shadow-glow: 0 0 20px hsl(38 90% 33% / 0.12);
+    --prompt-shadow: 0 4px 30px rgba(255,255,255,0.15), 0 0 50px rgba(161,98,7,0.10);
+
+    /* Semantic surfaces — Dark */
+    --surface: rgba(255,255,255,0.035);
+    --surface-hover: rgba(255,255,255,0.065);
+    --surface-active: rgba(255,255,255,0.08);
+    --accent-bg: rgba(161,98,7,0.14);
+    --border-hover: rgba(255,255,255,0.15);
+    --text-dim: #71717A;
+    --text-ghost: #52525B;
+    --accent-text: #D4A843;
+    --bg-nav: rgba(9,9,11,0.9);
+    --icon-bg: rgba(255,255,255,0.06);
+    --icon-border: rgba(255,255,255,0.08);
+    --positive: #22C55E;
+    --positive-bg: rgba(34,197,94,0.12);
+    --negative: #EF4444;
+    --negative-bg: rgba(239,68,68,0.12);
+  }
+}

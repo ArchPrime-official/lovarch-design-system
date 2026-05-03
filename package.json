@@ -1,0 +1,45 @@
+{
+  "name": "@archprime/lovarch-design-system",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "description": "Lovarch Design System V8 — shared submodule (tokens, motion, components, blocks)",
+  "license": "UNLICENSED",
+  "files": [
+    "src",
+    "tailwind-preset.ts",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "exports": {
+    ".": "./src/index.ts",
+    "./tokens/css": "./src/tokens/tokens.css",
+    "./tokens/fonts": "./src/tokens/fonts.css",
+    "./tokens/globals": "./src/tokens/globals.css",
+    "./tailwind-preset": "./tailwind-preset.ts",
+    "./motion": "./src/lib/motion.ts",
+    "./cn": "./src/lib/cn.ts",
+    "./blocks": "./src/blocks/index.ts",
+    "./blocks/registry": "./src/blocks/registry.ts",
+    "./components": "./src/components/index.ts"
+  },
+  "peerDependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "framer-motion": "^12.0.0",
+    "lucide-react": "^0.462.0",
+    "zod": "^3.23.0",
+    "tailwindcss": "^3.4.0",
+    "clsx": "^2.1.0",
+    "tailwind-merge": "^2.5.0"
+  },
+  "scripts": {
+    "lint": "echo 'lint via consumer'",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "typescript": "^5.5.0"
+  }
+}
