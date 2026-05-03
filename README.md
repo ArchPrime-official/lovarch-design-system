@@ -69,12 +69,27 @@ import "@archprime/lovarch-ds/tokens/globals";
 
 | Subpath | Exports | Use for |
 |---|---|---|
-| `/blocks` | `BlockRenderer`, `AnyBlockSchema`, individual schemas | CMS-rendered Zod blocks |
+| `/blocks` | `BlockRenderer`, `AnyBlockSchema`, 9 block schemas | CMS-rendered Zod blocks |
+| `/templates` | `TEMPLATES`, `getTemplate`, `listTemplates`, 3 page templates | Create-page-from-template |
 | `/feedback` | `LovarchSymbolLoader`, `GlassCard`, `LovarchAlert` | Loading + cards + alerts |
 | `/charts` | `LovarchBarList`, `LovarchProgressCircle`, `LovarchTracker` | KPI visualisations |
 | `/animated` | `NumberTicker`, `AnimatedList`, `ShimmerButton`, `DotPattern`, `GridPattern` | Micro-interactions + decorative patterns |
 | `/effects` | `ConstellationParticles`, `AmbientGlow`, `BackgroundEffects` | Full-screen ambient backgrounds |
-| `/lp-blocks` | `Navbar`, `Footer`, `Faq`, `BeforeAfterSlider`, `BeforeAfterCarousel`, `EmailModal`, `EnterpriseModal` | Landing-page sections |
+| `/lp-blocks` | `Navbar`, `Footer`, `Faq`, `BeforeAfterSlider`, `BeforeAfterCarousel`, `EmailModal`, `EnterpriseModal` | Statically-coded landing-page sections (callbacks-based) |
+
+## CMS blocks (9 types)
+
+| Type | Description |
+|---|---|
+| `hero` | Full-width hero with title + subtitle + CTA. Supports color/image/video/particles bg. |
+| `cta` | CTA section with optional background. |
+| `feature-grid` | Grid of feature cards with icon + title + description. |
+| `testimonials` | Quote cards with author + role. |
+| `pricing` | Tier comparison with highlighted plan. |
+| `navbar` | **(v0.3.0)** Sticky header with anchor-based nav. Light/dark. |
+| `footer` | **(v0.3.0)** Minimal footer with logo + legal links. Light/dark. |
+| `faq` | **(v0.3.0)** Accordion FAQ with stagger reveal. Light/dark. |
+| `before-after-carousel` | **(v0.3.0)** Section with slider carousel for AI render showcase. Light/dark. |
 
 ## Renderer usage (CMS pages)
 
@@ -121,11 +136,30 @@ For convenience, the root export `import { ... } from "@archprime/lovarch-ds"` r
 - **v0.1.0** — 5 CMS blocks (Hero/CTA/FeatureGrid/Testimonials/Pricing), tokens, motion, cn helper.
 - **v0.1.1** — Light-mode contrast fix on FeatureGrid/Testimonials/Pricing cards.
 - **v0.2.0** — 14 shared components (feedback/charts/animated/effects) + 7 LP-blocks (Navbar/Footer/Faq/BeforeAfter/EmailModal/EnterpriseModal).
+- **v0.3.0** — 4 new CMS blocks (navbar/footer/faq/before-after-carousel) + `templates/` registry with 3 page templates (lp-premium/lp-v3/landing-classic).
+
+## Templates usage (CMS Fase 4)
+
+```ts
+import { getTemplate, listTemplates } from "@archprime/lovarch-ds/templates";
+
+// List templates for admin gallery
+const templates = listTemplates();
+
+// Create new CMS page from template
+const tpl = getTemplate("lp-premium")!;
+await supabase.from("cms_pages").insert({
+  slug: "promo-italia-2026",
+  target_domain: tpl.default_target_domain,
+  locale: tpl.default_locale,
+  blocks: tpl.blocks,  // 8 pre-populated blocks
+  status: "draft",
+});
+```
 
 ## Roadmap
 
-- v0.3.x — page templates (LP Premium, LP V3, Landing Classic) consumable by the CMS template gallery
-- v0.3.x — additional CMS blocks (Logos, Stats, Hero with carousel)
+- v0.4.x — additional CMS blocks (Logos, Stats, Hero with carousel)
 - v0.4.x — multi-domain theming hooks (ArchPrime.io vs Lovarch variants)
 
 ## License
