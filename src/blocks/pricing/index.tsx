@@ -48,8 +48,8 @@ export function Pricing({ block }: { block: PricingBlock }) {
               className={cn(
                 "relative rounded-2xl border bg-card p-7 md:p-8 flex flex-col",
                 tier.highlighted
-                  ? "border-accent/60 shadow-xl ring-1 ring-accent/30"
-                  : "border-border/40 shadow-sm hover:shadow-md transition-shadow",
+                  ? "border-accent/60 shadow-xl ring-2 ring-accent/40 -translate-y-1"
+                  : "border-foreground/10 ring-1 ring-foreground/5 shadow-sm hover:border-foreground/20 hover:shadow-md hover:-translate-y-0.5 transition-all",
               )}
             >
               {tier.badge && (
