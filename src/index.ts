@@ -36,3 +36,6 @@ export * from "./charts";
 export * from "./animated";
 export * from "./effects";
 export * from "./lp-blocks";
+
+// v0.3.0 templates registry
+export * from "./templates";

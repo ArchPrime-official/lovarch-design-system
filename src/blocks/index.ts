@@ -3,6 +3,10 @@ export * from "./cta";
 export * from "./feature-grid";
 export * from "./testimonials";
 export * from "./pricing";
+export * from "./navbar";
+export * from "./footer";
+export * from "./faq";
+export * from "./before-after-carousel";
 export * from "./registry";
 
 import { BLOCK_REGISTRY, AnyBlockSchema, type AnyBlock, type BlockType, isKnownBlockType } from "./registry";

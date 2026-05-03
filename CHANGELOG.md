@@ -1,5 +1,55 @@
 # Changelog
 
+## v0.3.0 — 2026-05-03
+
+**4 new CMS blocks + templates registry.**
+
+Closes the gap to "PrimeTeam can create any landing page through the CMS admin" — the renderer now supports navbar, footer, FAQ and before-after carousel as Zod-typed CMS blocks. Plus a new `templates/` registry with 3 ready-to-use page templates (lp-premium / lp-v3 / landing-classic).
+
+### Added — 4 new CMS blocks
+
+Each follows the same `<name>/{schema.ts, index.tsx}` pattern as existing blocks (Hero/CTA/FeatureGrid/Testimonials/Pricing).
+
+- **`navbar`** — sticky header with logo, links, login + CTA. Anchor-based navigation (`href="#features"`) so it's static-renderable. Light/dark variants.
+- **`footer`** — minimal footer with logo + links + copyright. Light/dark variants.
+- **`faq`** — accordion with stagger reveal, `whitespace-pre-line` answer support. Light/dark variants.
+- **`before-after-carousel`** — section wrapper around drag-slider with title/badge/CTA. Light/dark variants.
+
+`AnyBlockSchema` discriminated union: 5 → **9 types**.
+`BLOCK_REGISTRY`: 5 → **9 entries**.
+
+### Added — `templates/` subpath (NEW)
+
+Pre-populated `AnyBlock[]` arrays for "create page from template":
+
+- **`LP_PREMIUM_TEMPLATE`** — full marketing landing (8 blocks: navbar → hero → features → before-after → pricing → testimonials → faq → footer). Italian defaults. Models `lovarch.com/lp`.
+- **`LP_V3_TEMPLATE`** — modern minimalist (6 blocks, dark variant). Models `lovarch.com/lp-v3`.
+- **`LANDING_CLASSIC_TEMPLATE`** — quick promo (4 blocks: hero → features → cta → footer). Models `lovarch.com/landing`.
+
+```ts
+import { TEMPLATES, getTemplate, listTemplates } from "@archprime/lovarch-ds/templates";
+
+const tpl = getTemplate("lp-premium");
+// → { id, display_name, description, blocks, default_target_domain, default_locale }
+
+await db.from("cms_pages").insert({
+  slug: "promo-2026",
+  target_domain: tpl.default_target_domain,
+  locale: tpl.default_locale,
+  blocks: tpl.blocks,
+});
+```
+
+Image URLs in templates are placeholders pointing to `https://placehold.co` — admin replaces with real assets after creation.
+
+### Migration
+
+Backwards-compatible. Existing pages with the 5 v0.1.0 blocks keep working unchanged. New pages can mix-and-match all 9 block types.
+
+The 4 new block types map 1:1 to the components in `lp-blocks/` subpath (v0.2.0). The `lp-blocks/` versions remain available for non-CMS use cases (e.g. statically-coded landing pages).
+
+---
+
 ## v0.2.0 — 2026-05-03
 
 **Component expansion + landing-page composite blocks.**

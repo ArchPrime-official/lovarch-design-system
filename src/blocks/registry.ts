@@ -4,13 +4,25 @@ import { Cta, CtaSchema, type CtaBlock } from "./cta";
 import { FeatureGrid, FeatureGridSchema, type FeatureGridBlock } from "./feature-grid";
 import { Testimonials, TestimonialsSchema, type TestimonialsBlock } from "./testimonials";
 import { Pricing, PricingSchema, type PricingBlock } from "./pricing";
+import { Navbar, NavbarSchema, type NavbarBlock } from "./navbar";
+import { Footer, FooterSchema, type FooterBlock } from "./footer";
+import { Faq, FaqSchema, type FaqBlock } from "./faq";
+import {
+  BeforeAfterCarousel,
+  BeforeAfterCarouselSchema,
+  type BeforeAfterCarouselBlock,
+} from "./before-after-carousel";
 
 export type AnyBlock =
   | HeroBlock
   | CtaBlock
   | FeatureGridBlock
   | TestimonialsBlock
-  | PricingBlock;
+  | PricingBlock
+  | NavbarBlock
+  | FooterBlock
+  | FaqBlock
+  | BeforeAfterCarouselBlock;
 
 export const AnyBlockSchema = z.discriminatedUnion("type", [
   HeroSchema,
@@ -18,6 +30,10 @@ export const AnyBlockSchema = z.discriminatedUnion("type", [
   FeatureGridSchema,
   TestimonialsSchema,
   PricingSchema,
+  NavbarSchema,
+  FooterSchema,
+  FaqSchema,
+  BeforeAfterCarouselSchema,
 ]);
 
 export const BLOCK_REGISTRY = {
@@ -26,6 +42,13 @@ export const BLOCK_REGISTRY = {
   "feature-grid": { schema: FeatureGridSchema, component: FeatureGrid },
   testimonials: { schema: TestimonialsSchema, component: Testimonials },
   pricing: { schema: PricingSchema, component: Pricing },
+  navbar: { schema: NavbarSchema, component: Navbar },
+  footer: { schema: FooterSchema, component: Footer },
+  faq: { schema: FaqSchema, component: Faq },
+  "before-after-carousel": {
+    schema: BeforeAfterCarouselSchema,
+    component: BeforeAfterCarousel,
+  },
 } as const;
 
 export type BlockType = keyof typeof BLOCK_REGISTRY;
