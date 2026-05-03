@@ -32,7 +32,7 @@ export function Testimonials({ block }: { block: TestimonialsBlock }) {
             <motion.figure
               key={i}
               variants={listItem}
-              className="rounded-2xl border border-border/40 bg-card/60 backdrop-blur-md p-6 md:p-7 shadow-sm hover:shadow-md transition-shadow"
+              className="rounded-2xl border border-foreground/10 bg-card/80 backdrop-blur-md ring-1 ring-foreground/5 p-6 md:p-7 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all"
             >
               {item.rating && (
                 <div className="flex gap-0.5 mb-3" aria-label={`${item.rating} out of 5 stars`}>

@@ -47,7 +47,7 @@ export function FeatureGrid({ block }: { block: FeatureGridBlock }) {
                 key={i}
                 variants={listItem}
                 className={cn(
-                  "rounded-xl border border-border/40 bg-card p-6 md:p-7 hover:border-border/60 hover:shadow-md transition-all",
+                  "rounded-xl border border-foreground/10 bg-card shadow-sm ring-1 ring-foreground/5 p-6 md:p-7 hover:border-foreground/20 hover:shadow-md hover:-translate-y-0.5 transition-all",
                   isLeft && "flex gap-4",
                 )}
               >

@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.1.1 — 2026-05-03
+
+**Visual polish for light mode contrast.**
+
+### Changed
+- `FeatureGrid` cards: `border-foreground/10 + ring-1 ring-foreground/5 + shadow-sm + hover -translate-y-0.5`. Hover border `foreground/20`. Fixes near-invisibility in warm-white-on-warm-white light mode.
+- `Testimonials` cards: same border/ring treatment, hover lift.
+- `Pricing` non-highlighted tiers: same border/ring treatment, hover lift. Highlighted tier now `ring-2 ring-accent/40 -translate-y-1` for stronger emphasis.
+
 ## v0.1.0 — 2026-05-03
 
 **Initial release for CMS Fase 0.**
