@@ -1,12 +1,17 @@
 /**
- * Components barrel — Phase 1 of v0.1.0 ships only the blocks.
- * The 13 component shims (LovarchSymbolLoader, GlassCard, ConstellationParticles,
- * AmbientGlow, LovarchAlert, BackgroundEffects, charts/*, animated/*) will be
- * extracted progressively in v0.1.x patches as Story 1.1 Phase 3 advances.
+ * Components barrel — DEPRECATED in favor of subpath exports.
  *
- * Until then, consumer apps continue importing them directly from their own
- * Lovarch/src/components/ui paths — the renderer in /page/:slug doesn't
- * depend on them; only Hero/CTA/FeatureGrid/Testimonials/Pricing are needed
- * for Fase 0.
+ * Use the dedicated subpaths instead:
+ *   - "@archprime/lovarch-ds/feedback"   (loaders, alerts, glass-card)
+ *   - "@archprime/lovarch-ds/charts"     (bar-list, progress-circle, tracker)
+ *   - "@archprime/lovarch-ds/animated"   (number-ticker, animated-list, shimmer-button, patterns)
+ *   - "@archprime/lovarch-ds/effects"    (constellation-particles, ambient-glow, background-effects)
+ *   - "@archprime/lovarch-ds/lp-blocks"  (navbar, footer, faq, before-after, email-modal, enterprise-modal)
+ *
+ * For now this barrel re-exports everything for backwards compatibility.
  */
-export {};
+export * from "../feedback";
+export * from "../charts";
+export * from "../animated";
+export * from "../effects";
+export * from "../lp-blocks";

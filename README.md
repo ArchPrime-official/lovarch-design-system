@@ -1,6 +1,6 @@
 # Lovarch Design System V8
 
-Shared design system distributed as a **git submodule** to Lovarch + PrimeTeam (and future ArchPrime.io). Single source of truth for tokens, motion, components and CMS blocks.
+Shared design system distributed as a **git submodule** to Lovarch + PrimeTeam (and future ArchPrime.io). Single source of truth for tokens, motion, components, blocks and landing-page sections.
 
 > ⚠️ **NEVER edit files inside a consumer's `squads/lovarch-design-system/` directly.** Edit here, push, then run `bump-all-squads.sh` in each consumer.
 
@@ -23,7 +23,10 @@ The submodule declares peer deps but the **consumer must install them**:
   "zod": "^3.23.0",
   "tailwindcss": "^3.4.0",
   "clsx": "^2.1.0",
-  "tailwind-merge": "^2.5.0"
+  "tailwind-merge": "^2.5.0",
+  "class-variance-authority": "^0.7.0",
+  "@radix-ui/react-dialog": "^1.1.0",
+  "@radix-ui/react-select": "^2.1.0"
 }
 ```
 
@@ -62,6 +65,17 @@ import "@archprime/lovarch-ds/tokens/fonts";
 import "@archprime/lovarch-ds/tokens/globals";
 ```
 
+## Subpaths
+
+| Subpath | Exports | Use for |
+|---|---|---|
+| `/blocks` | `BlockRenderer`, `AnyBlockSchema`, individual schemas | CMS-rendered Zod blocks |
+| `/feedback` | `LovarchSymbolLoader`, `GlassCard`, `LovarchAlert` | Loading + cards + alerts |
+| `/charts` | `LovarchBarList`, `LovarchProgressCircle`, `LovarchTracker` | KPI visualisations |
+| `/animated` | `NumberTicker`, `AnimatedList`, `ShimmerButton`, `DotPattern`, `GridPattern` | Micro-interactions + decorative patterns |
+| `/effects` | `ConstellationParticles`, `AmbientGlow`, `BackgroundEffects` | Full-screen ambient backgrounds |
+| `/lp-blocks` | `Navbar`, `Footer`, `Faq`, `BeforeAfterSlider`, `BeforeAfterCarousel`, `EmailModal`, `EnterpriseModal` | Landing-page sections |
+
 ## Renderer usage (CMS pages)
 
 ```tsx
@@ -71,20 +85,48 @@ const blocks = AnyBlockSchema.array().parse(page.blocks);
 return blocks.map((b, i) => <BlockRenderer key={i} block={b} />);
 ```
 
-## v0.1.0 — what's in
+## LP-blocks usage (content-agnostic, consumer wires i18n)
 
-- 5 blocks: Hero · CTA · FeatureGrid · Testimonials · Pricing (with Zod schemas)
-- Tokens (light + dark), fonts (Playfair / Outfit / DM Sans / Inter / JetBrains)
-- Motion lib (Framer variants: fadeInUp, stagger, scaleOnTap, etc.)
-- `cn` helper
-- Icon allowlist (~80 Lucide names curated)
-- Tailwind preset
+```tsx
+import { Navbar, Faq, BeforeAfterCarousel, EmailModal } from "@archprime/lovarch-ds/lp-blocks";
+import { useLanguage } from "@/contexts/LanguageContext";
+
+export function MyLanding() {
+  const { t } = useLanguage();
+  return (
+    <>
+      <Navbar
+        logoUrl="/lovarch-logo.png"
+        navLinks={[
+          { label: t("lp.nav.features"), onClick: () => scrollTo("features") },
+          { label: t("lp.nav.pricing"), onClick: () => scrollTo("pricing") },
+        ]}
+        loginLabel={t("lp.nav.login")}
+        ctaLabel={t("lp.nav.cta")}
+        onLogin={() => navigate("/login")}
+        onCtaClick={() => scrollTo("pricing")}
+      />
+      <Faq title={t("lp.faq.title")} items={faqItems} />
+    </>
+  );
+}
+```
+
+## Components (root subpath, optional)
+
+For convenience, the root export `import { ... } from "@archprime/lovarch-ds"` re-exports everything. Subpath imports are preferred for tree-shaking.
+
+## Versions
+
+- **v0.1.0** — 5 CMS blocks (Hero/CTA/FeatureGrid/Testimonials/Pricing), tokens, motion, cn helper.
+- **v0.1.1** — Light-mode contrast fix on FeatureGrid/Testimonials/Pricing cards.
+- **v0.2.0** — 14 shared components (feedback/charts/animated/effects) + 7 LP-blocks (Navbar/Footer/Faq/BeforeAfter/EmailModal/EnterpriseModal).
 
 ## Roadmap
 
-- v0.2.x — extract 13 shared components (LovarchSymbolLoader, GlassCard, ConstellationParticles, charts, animated) with re-export shims
-- v0.3.x — additional blocks (Logos, FAQ, Stats)
-- v0.4.x — multi-domain theming (ArchPrime.io variant)
+- v0.3.x — page templates (LP Premium, LP V3, Landing Classic) consumable by the CMS template gallery
+- v0.3.x — additional CMS blocks (Logos, Stats, Hero with carousel)
+- v0.4.x — multi-domain theming hooks (ArchPrime.io vs Lovarch variants)
 
 ## License
 
