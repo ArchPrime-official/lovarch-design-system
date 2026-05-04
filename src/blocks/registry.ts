@@ -12,6 +12,7 @@ import {
   BeforeAfterCarouselSchema,
   type BeforeAfterCarouselBlock,
 } from "./before-after-carousel";
+import { LeadForm, LeadFormSchema, type LeadFormBlock } from "./lead-form";
 
 export type AnyBlock =
   | HeroBlock
@@ -22,7 +23,8 @@ export type AnyBlock =
   | NavbarBlock
   | FooterBlock
   | FaqBlock
-  | BeforeAfterCarouselBlock;
+  | BeforeAfterCarouselBlock
+  | LeadFormBlock;
 
 export const AnyBlockSchema = z.discriminatedUnion("type", [
   HeroSchema,
@@ -34,6 +36,7 @@ export const AnyBlockSchema = z.discriminatedUnion("type", [
   FooterSchema,
   FaqSchema,
   BeforeAfterCarouselSchema,
+  LeadFormSchema,
 ]);
 
 export const BLOCK_REGISTRY = {
@@ -49,6 +52,7 @@ export const BLOCK_REGISTRY = {
     schema: BeforeAfterCarouselSchema,
     component: BeforeAfterCarousel,
   },
+  "lead-form": { schema: LeadFormSchema, component: LeadForm },
 } as const;
 
 export type BlockType = keyof typeof BLOCK_REGISTRY;
