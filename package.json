@@ -1,6 +1,6 @@
 {
   "name": "@archprime/lovarch-design-system",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "type": "module",
   "private": true,
   "description": "Lovarch Design System V8 — shared submodule (tokens, motion, components, blocks)",
@@ -27,7 +27,9 @@
     "./animated": "./src/animated/index.ts",
     "./effects": "./src/effects/index.ts",
     "./lp-blocks": "./src/lp-blocks/index.ts",
-    "./templates": "./src/templates/index.ts"
+    "./templates": "./src/templates/index.ts",
+    "./brand": "./src/brand/index.ts",
+    "./brand/assets/*": "./src/brand/assets/*"
   },
   "peerDependencies": {
     "react": "^18.3.1",
