@@ -1,5 +1,54 @@
 # Changelog
 
+## v0.4.0 — 2026-05-04
+
+**Brand subpath — official Lovarch logos, symbol and brand assets.**
+
+Closes the gap where consumers (PrimeTeam, future ArchPrime.io) had to either copy logo PNGs into their own `/public/` folder or reference URLs hardcoded to `https://lovarch.com/...` (one of the 18 hotspots flagged in the upcoming `app.lovarch.com` migration). The DS now ships the brand assets directly so consumers stay in sync with a single bump.
+
+### Added — `brand/` subpath (NEW)
+
+```ts
+import { LovarchLogo, LovarchSymbol } from "@archprime/lovarch-ds/brand";
+import {
+  LOVARCH_LOGO_HORIZONTAL_URL,
+  LOVARCH_EMAIL_LOGO_URL,
+  LOVARCH_OG_IMAGE_URL,
+  LOVARCH_FAVICON_URL,
+} from "@archprime/lovarch-ds/brand";
+```
+
+- **`<LovarchLogo />`** — official wordmark with three variants:
+  - `variant="horizontal"` — full PNG (1920×248, white wordmark — pair with dark backgrounds)
+  - `variant="symbol"` — inline SVG mark (theme-aware via `currentColor`, treeshake-friendly)
+  - `variant="email"` — high-res PNG sized for email clients (1536×652)
+- **`<LovarchSymbol />`** — standalone SVG of the geometric symbol (same geometry as the animated `LovarchSymbolLoader` from `/feedback`, but static). Use for favicons, watermarks, footer badges, anywhere you need the mark without the canvas runtime.
+- **Asset URL constants** — for use outside JSX (meta tags, OG image, server-side templates):
+  - `LOVARCH_LOGO_HORIZONTAL_URL` — 1920×248 transparent white PNG
+  - `LOVARCH_EMAIL_LOGO_URL` — 1536×652 transparent PNG
+  - `LOVARCH_OG_IMAGE_URL` — 1536×1024 Open Graph image
+  - `LOVARCH_FAVICON_URL` — 819×922 PNG (generate ICO/16/32/192/512 from this)
+
+### Added — `brand/assets/*` direct file access
+
+For consumers that need to reference asset paths in non-bundled contexts (Vercel rewrites, static HTML, Deno edge functions with bundling), the package exports the raw files via `@archprime/lovarch-ds/brand/assets/*`.
+
+### Why this matters
+
+Removes 4+ hardcoded `https://lovarch.com/brand/...` and `https://lovarch.com/email/...` references from consumer code. Also provides the static SVG symbol that `LovarchSymbolLoader` (animated, canvas-based) couldn't satisfy for use cases like email signatures, OG images, and PDF exports where runtime canvas is not available.
+
+### Migration
+
+Backwards-compatible. Existing consumers continue working with v0.3.x APIs unchanged. New brand subpath is additive.
+
+### Known gaps (deferred to v0.4.x)
+
+- No light-theme variant of the horizontal wordmark — the SVG `<LovarchSymbol />` covers theme-awareness via `currentColor`, but the horizontal PNG is white-only. If a dark-on-light wordmark is needed, request via issue.
+- PNGs not optimized — `~3.9MB` total across 4 files. Consumer's bundler will hash and serve, but a future pass should compress (especially `og-image.png` at 2.6MB).
+- No SVG version of the horizontal wordmark (would require recreating the typography in SVG paths).
+
+---
+
 ## v0.3.1 — 2026-05-04
 
 **Fix template field names + add CI validation script.**

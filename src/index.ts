@@ -20,6 +20,9 @@
  *
  *   // Landing-page composite blocks (v0.2.0)
  *   import { Navbar, Footer, Faq, BeforeAfterCarousel, EmailModal, EnterpriseModal } from "@archprime/lovarch-ds/lp-blocks";
+ *
+ *   // Brand assets (v0.4.0)
+ *   import { LovarchLogo, LovarchSymbol, LOVARCH_OG_IMAGE_URL } from "@archprime/lovarch-ds/brand";
  */
 
 // CMS blocks (Zod-schema + BlockRenderer)
@@ -39,3 +42,6 @@ export * from "./lp-blocks";
 
 // v0.3.0 templates registry
 export * from "./templates";
+
+// v0.4.0 brand assets (logos + symbol + asset URLs)
+export * from "./brand";
