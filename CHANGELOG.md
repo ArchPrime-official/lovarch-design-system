@@ -1,5 +1,29 @@
 # Changelog
 
+## v0.3.1 — 2026-05-04
+
+**Fix template field names + add CI validation script.**
+
+The 3 templates shipped in v0.3.0 used stale field names (`features`/`title`/`subtitle` for feature-grid; `subtitle` for cta; lowercase icons) that failed Zod validation against the canonical schemas. Consumers couldn't use them — `AnyBlockSchema.parse(template.blocks[i])` would reject every feature-grid. PrimeTeam (v0.3.0 consumer) had to ship a parallel `templates.ts` inline with corrected field names; this release re-aligns the DS templates so the inline copy can be removed.
+
+### Fixed
+- `LP_PREMIUM_TEMPLATE`, `LP_V3_TEMPLATE`, `LANDING_CLASSIC_TEMPLATE` now use canonical schema names:
+  - feature-grid: `features` → `items`, `title` → `heading`, `subtitle` → `subheading`, plus required `variant` field
+  - cta: `subtitle` → `body`, `cta: {label,href,variant}` → `button: {label,href}` + `variant` enum
+  - footer: required `logoAlt` field added
+  - faq: required `anchorId` field added
+  - before-after-carousel: required `anchorId` field added
+  - feature-grid icons: lowercase (`sparkles`) → PascalCase (`Sparkles`) per `ICON_ALLOWLIST` enum
+
+### Added
+- `scripts/validate-templates.ts` — runs `AnyBlockSchema.parse()` against every block of every template, exits non-zero on any failure with a per-error path/message summary
+- `npm run validate:templates` script
+- `tsx` + `zod` as devDependencies (needed to actually run the validation)
+- GitHub Actions workflow `.github/workflows/validate-templates.yml` — runs on every PR and push to main, blocks merges with broken templates
+
+### Why this matters
+Templates that fail backend Zod can't be used to seed CMS pages — admin clicks "Use template" → backend returns 400. The CI script makes that catastrophic regression impossible going forward.
+
 ## v0.3.0 — 2026-05-03
 
 **4 new CMS blocks + templates registry.**

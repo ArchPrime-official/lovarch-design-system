@@ -41,27 +41,27 @@ export const LP_V3_TEMPLATE: CmsTemplate = {
     },
     {
       type: "feature-grid",
-      title: "Built for studios that move fast",
+      heading: "Built for studios that move fast",
       columns: 4,
-      features: [
-        { title: "Render AI", description: "30s photorealistic renders.", icon: "Sparkles" },
-        { title: "Branding", description: "Logo + kit on demand.", icon: "Palette" },
-        { title: "CRM", description: "Pipeline + automations.", icon: "Users" },
-        { title: "Finance", description: "Invoicing + cashflow.", icon: "DollarSign" },
+      variant: "icons-top",
+      items: [
+        { icon: "Sparkles", title: "Render AI", description: "30s photorealistic renders." },
+        { icon: "Palette", title: "Branding", description: "Logo + kit on demand." },
+        { icon: "Users", title: "CRM", description: "Pipeline + automations." },
+        { icon: "TrendingUp", title: "Finance", description: "Invoicing + cashflow." },
       ],
     },
     {
       type: "pricing",
-      title: "Pricing",
-      subtitle: "No hidden fees.",
+      heading: "Pricing",
+      subheading: "No hidden fees.",
       tiers: [
         {
           name: "Starter",
           price: "$49",
           period: "/mo",
           features: ["100 renders", "1 brand"],
-          ctaLabel: "Start",
-          ctaHref: "/signup",
+          cta: { label: "Start", href: "/signup" },
           highlighted: false,
         },
         {
@@ -69,8 +69,7 @@ export const LP_V3_TEMPLATE: CmsTemplate = {
           price: "$99",
           period: "/mo",
           features: ["500 renders", "Unlimited brands", "Team"],
-          ctaLabel: "Start",
-          ctaHref: "/signup",
+          cta: { label: "Start", href: "/signup" },
           highlighted: true,
         },
       ],
@@ -78,14 +77,16 @@ export const LP_V3_TEMPLATE: CmsTemplate = {
     {
       type: "faq",
       title: "FAQ",
+      anchorId: "faq",
+      variant: "dark",
       items: [
         { question: "How does AI render work?", answer: "Upload sketch, get photo render in 30s." },
         { question: "Can I cancel anytime?", answer: "Yes, no penalties." },
       ],
-      variant: "dark",
     },
     {
       type: "footer",
+      logoAlt: "Brand",
       links: [
         { href: "/terms-of-service", label: "Terms", external: false },
         { href: "/privacy-policy", label: "Privacy", external: false },
