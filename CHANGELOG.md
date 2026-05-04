@@ -1,5 +1,24 @@
 # Changelog
 
+## v0.4.1 — 2026-05-04
+
+**New block: `lead-form` — captura de lead nativa nas páginas CMS.**
+
+Primeiro block do DS que produz side-effect (submit). Mantém-se agnóstico de backend: o submit handler é injetado pelo parent via `<LeadFormProvider value={{ submit }}>`. Sem provider, o block entra em modo preview (warning + erro suave). PrimeTeam vai usar isso para alimentar `cms-form-submit` (que reusa `form-submit` + `meta-attribution` + `meta-conversion-tracking`).
+
+### Added
+- `blocks/lead-form/schema.ts` — `LeadFormSchema` + `LeadFormFieldSchema` com 5 tipos (`text|email|phone|textarea|select`), validação leve (chave snake_case, max 12 fields)
+- `blocks/lead-form/context.tsx` — `LeadFormProvider`, `useLeadFormContext`, tipos `LeadFormSubmitFn|Input|Result`
+- `blocks/lead-form/index.tsx` — componente React com motion + Outfit + estados controlados, success message inline ou redirect, error display, anchor_id deep-link
+- Registro no `BLOCK_REGISTRY` + export em `blocks/index.ts`
+
+### Pattern
+```tsx
+<LeadFormProvider value={{ submit: async (input) => { /* call cms-form-submit */ } }}>
+  <BlockRenderer block={leadFormBlock} />
+</LeadFormProvider>
+```
+
 ## v0.4.0 — 2026-05-04
 
 **Brand subpath — official Lovarch logos, symbol and brand assets.**
@@ -46,8 +65,6 @@ Backwards-compatible. Existing consumers continue working with v0.3.x APIs uncha
 - No light-theme variant of the horizontal wordmark — the SVG `<LovarchSymbol />` covers theme-awareness via `currentColor`, but the horizontal PNG is white-only. If a dark-on-light wordmark is needed, request via issue.
 - PNGs not optimized — `~3.9MB` total across 4 files. Consumer's bundler will hash and serve, but a future pass should compress (especially `og-image.png` at 2.6MB).
 - No SVG version of the horizontal wordmark (would require recreating the typography in SVG paths).
-
----
 
 ## v0.3.1 — 2026-05-04
 
