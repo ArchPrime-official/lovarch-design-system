@@ -13,6 +13,9 @@ import {
   type BeforeAfterCarouselBlock,
 } from "./before-after-carousel";
 import { LeadForm, LeadFormSchema, type LeadFormBlock } from "./lead-form";
+import { Stats, StatsSchema, type StatsBlock } from "./stats";
+import { Ecosystem, EcosystemSchema, type EcosystemBlock } from "./ecosystem";
+import { Replaces, ReplacesSchema, type ReplacesBlock } from "./replaces";
 
 export type AnyBlock =
   | HeroBlock
@@ -24,7 +27,10 @@ export type AnyBlock =
   | FooterBlock
   | FaqBlock
   | BeforeAfterCarouselBlock
-  | LeadFormBlock;
+  | LeadFormBlock
+  | StatsBlock
+  | EcosystemBlock
+  | ReplacesBlock;
 
 export const AnyBlockSchema = z.discriminatedUnion("type", [
   HeroSchema,
@@ -37,6 +43,9 @@ export const AnyBlockSchema = z.discriminatedUnion("type", [
   FaqSchema,
   BeforeAfterCarouselSchema,
   LeadFormSchema,
+  StatsSchema,
+  EcosystemSchema,
+  ReplacesSchema,
 ]);
 
 export const BLOCK_REGISTRY = {
@@ -53,6 +62,9 @@ export const BLOCK_REGISTRY = {
     component: BeforeAfterCarousel,
   },
   "lead-form": { schema: LeadFormSchema, component: LeadForm },
+  stats: { schema: StatsSchema, component: Stats },
+  ecosystem: { schema: EcosystemSchema, component: Ecosystem },
+  replaces: { schema: ReplacesSchema, component: Replaces },
 } as const;
 
 export type BlockType = keyof typeof BLOCK_REGISTRY;

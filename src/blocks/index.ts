@@ -8,6 +8,9 @@ export * from "./footer";
 export * from "./faq";
 export * from "./before-after-carousel";
 export * from "./lead-form";
+export * from "./stats";
+export * from "./ecosystem";
+export * from "./replaces";
 export * from "./registry";
 
 import { BLOCK_REGISTRY, AnyBlockSchema, type AnyBlock, type BlockType, isKnownBlockType } from "./registry";
