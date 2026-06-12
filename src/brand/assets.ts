@@ -21,11 +21,11 @@ import faviconUrl from "./assets/favicon.png";
 /** 1920×248 transparent PNG, white wordmark — pair with dark backgrounds. */
 export const LOVARCH_LOGO_HORIZONTAL_URL = logoHorizontalWhiteUrl;
 
-/** 1536×652 transparent PNG — sized for email client rendering. */
+/** 1024×434 transparent PNG — sized for email client rendering (retina-safe). */
 export const LOVARCH_EMAIL_LOGO_URL = logoEmailUrl;
 
-/** 1536×1024 — Open Graph / Twitter Card hero image. */
+/** 1200×800 — Open Graph / Twitter Card hero image. */
 export const LOVARCH_OG_IMAGE_URL = ogImageUrl;
 
-/** 819×922 PNG — high-res favicon source. Generate ICO/16/32/192/512 from this. */
+/** 455×512 PNG — high-res favicon source. Generate ICO/16/32/192/512 from this. */
 export const LOVARCH_FAVICON_URL = faviconUrl;

@@ -78,7 +78,7 @@ import "@archprime/lovarch-ds/tokens/globals";
 
 | Subpath | Exports | Use for |
 |---|---|---|
-| `/blocks` | `BlockRenderer`, `AnyBlockSchema`, 9 block schemas | CMS-rendered Zod blocks |
+| `/blocks` | `BlockRenderer`, `AnyBlockSchema`, 13 block schemas | CMS-rendered Zod blocks |
 | `/templates` | `TEMPLATES`, `getTemplate`, `listTemplates`, 3 page templates | Create-page-from-template |
 | `/feedback` | `LovarchSymbolLoader`, `GlassCard`, `LovarchAlert` | Loading + cards + alerts |
 | `/charts` | `LovarchBarList`, `LovarchProgressCircle`, `LovarchTracker` | KPI visualisations |
@@ -143,6 +143,15 @@ export function MyLanding() {
 ## Components (root subpath, optional)
 
 For convenience, the root export `import { ... } from "@archprime/lovarch-ds"` re-exports everything. Subpath imports are preferred for tree-shaking.
+
+> **Name collision — `lp-blocks` aliased at root.** `Navbar`, `Footer`, `Faq` and
+> `BeforeAfterCarousel` exist as **both** CMS blocks (`/blocks`) and landing-page
+> sections (`/lp-blocks`). From the **root** barrel the CMS-block versions keep the
+> canonical names, and the LP versions are re-exported with an `Lp` prefix
+> (`LpNavbar`, `LpFooter`, `LpFaq`, `LpBeforeAfterCarousel`). To get the LP versions
+> under their original names, import from the `/lp-blocks` subpath directly. (A plain
+> `export *` of both would make the colliding names ambiguous and silently `undefined`
+> at the root barrel.)
 
 ## Templates usage (CMS Fase 4)
 
@@ -210,8 +219,9 @@ the same rule.
 ## Roadmap
 
 - v0.5.x — multi-domain theming hooks (ArchPrime.io vs Lovarch variants)
-- v0.5.x — PNG asset compression (brand subpath ~3.9MB total)
 - v0.x — rename `package.json name` from `@archprime/lovarch-design-system` to `@archprime/lovarch-ds` (coordinated with both consumers)
+- Backlog — extract shared core for the `blocks` ↔ `lp-blocks` duplicates (navbar/footer/faq/carousel), so a fix lands once instead of twice
+- Backlog — replace the 7 `placehold.co` URLs in `templates/lp-v3.ts` and `templates/lp-premium.ts` with hosted Lovarch Storage assets once stable URLs exist (the block schemas require absolute `.url()` values, so these admin-replaceable seeds stay on placehold.co until real assets are uploaded)
 
 ## License
 

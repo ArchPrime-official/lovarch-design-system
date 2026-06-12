@@ -46,7 +46,7 @@ export function Faq({
       id={id}
       className={cn(
         "py-16 md:py-24",
-        isDark ? "bg-neutral-950" : "bg-neutral-50",
+        isDark ? "bg-[#09090B]" : "bg-neutral-50",
         className
       )}
     >
