@@ -4,15 +4,32 @@ on:
   pull_request:
     branches: [main]
     paths:
-      - "src/templates/**"
-      - "src/blocks/**"
-      - "src/lib/icon-allowlist.ts"
-      - "scripts/validate-templates.ts"
+      - "src/**"
+      - "tailwind-preset.ts"
+      - "tsconfig.json"
+      - "scripts/**"
       - "package.json"
   push:
     branches: [main]
 
 jobs:
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: TypeScript type check
+        run: npm run typecheck
+
   validate:
     runs-on: ubuntu-latest
     steps:
