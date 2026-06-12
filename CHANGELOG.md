@@ -1,5 +1,46 @@
 # Changelog
 
+## Unreleased — 2026-06-12
+
+**Audit fixes (Fase 7 of `2026-06-12-squads-prd-audit-implementation-plan.md`).** No new
+features — correctness, typecheck hygiene, repo-size and docs.
+
+### Fixed
+
+- **Root barrel name collision (critical).** `src/index.ts` re-exported `./blocks` and
+  `./lp-blocks` with `export *`, so `Navbar`, `Footer`, `Faq` and `BeforeAfterCarousel`
+  (present in both) became ambiguous and were silently dropped from the root barrel —
+  `import { Faq } from "@archprime/lovarch-ds"` resolved to `undefined`. The CMS-block
+  versions now keep the canonical root names; the LP versions are re-exported explicitly
+  with an `Lp` prefix (`LpNavbar`, `LpFooter`, `LpFaq`, `LpBeforeAfterCarousel`). The
+  `/lp-blocks` subpath is unchanged.
+- **Typecheck now passes clean.** framer-motion v12 tightened `Transition` typings, leaving
+  13 pre-existing `error TS` in `src/lib/motion.ts` and four blocks (`cta`/`hero`/
+  `lead-form`/`pricing`) that spread `scaleOnTap`. Fixed by typing the easing tuples as
+  `Easing` and pinning `scaleOnTap.transition.type` with `as const`. This unblocks the
+  `typecheck` job in `.github/workflows/validate-templates.yml`.
+
+### Changed
+
+- **Assets compressed** (~3.2MB → ~0.9MB across the three): `og-image.png` 2.65MB → 1.48MB
+  (1536×1024 → 1200×800, standard OG width), `logo-email.png` 768KB → 88KB (1536×652 →
+  1024×434), `favicon.png` 488KB → 171KB (819×922 → 455×512). Dimension comments in
+  `src/brand/assets.ts` updated accordingly. (sips resize only — pngquant unavailable.)
+- **`bg-neutral-950` → `bg-[#09090B]`** (official DS V8 dark base) in the two remaining
+  uses: `blocks/faq/index.tsx`, `lp-blocks/faq.tsx`.
+- **README** — `/blocks` subpath row now says "13 block schemas" (was 9); documented the
+  root-barrel `Lp`-alias collision; updated Roadmap (PNG compression done; added
+  blocks↔lp-blocks core-extraction and placehold.co backlog items).
+- `package-lock.json` version field synced 0.4.0 → 0.5.0 to match `package.json`.
+
+### Follow-ups (not done here)
+
+- Extract a shared core for the `blocks` ↔ `lp-blocks` duplicates (navbar/footer/faq/
+  carousel) so fixes land once instead of twice.
+- Replace the 7 `placehold.co` URLs in `templates/lp-v3.ts` / `templates/lp-premium.ts`
+  with hosted Lovarch Storage assets once stable URLs exist (block schemas require
+  absolute `.url()` values, so they stay on placehold.co until real assets are uploaded).
+
 ## v0.5.0 — 2026-06-12
 
 **3 new CMS blocks: `ecosystem`, `stats`, `replaces` — parity with lovarch.com/lp-v3.**

@@ -7,11 +7,13 @@
  *   <motion.div variants={fadeInUp} initial="hidden" animate="visible">
  *   <motion.div {...scaleOnTap}>
  */
-import type { Variants, TargetAndTransition } from "framer-motion";
+import type { Variants, TargetAndTransition, Easing } from "framer-motion";
 
 // ─── Easing curves (DS V8) ─────────────────────────────
-export const easeExpoOut = [0.16, 1, 0.3, 1] as const;
-export const easeSmooth = [0.2, 0, 0, 1] as const;
+// Cubic-bezier control points typed as a framer-motion Easing tuple so they
+// satisfy `Transition["ease"]` under framer-motion v12's stricter typings.
+export const easeExpoOut: Easing = [0.16, 1, 0.3, 1];
+export const easeSmooth: Easing = [0.2, 0, 0, 1];
 
 // ─── Stagger container ─────────────────────────────────
 export const stagger = (staggerMs = 60): Variants => ({
@@ -27,7 +29,7 @@ export const fadeInUp: Variants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.4, ease: easeExpoOut as unknown as number[] },
+    transition: { duration: 0.4, ease: easeExpoOut },
   },
 };
 
@@ -37,7 +39,7 @@ export const fadeInScale: Variants = {
   visible: {
     opacity: 1,
     scale: 1,
-    transition: { duration: 0.35, ease: easeExpoOut as unknown as number[] },
+    transition: { duration: 0.35, ease: easeExpoOut },
   },
 };
 
@@ -47,14 +49,14 @@ export const slideInRight: Variants = {
   visible: {
     opacity: 1,
     x: 0,
-    transition: { duration: 0.4, ease: easeExpoOut as unknown as number[] },
+    transition: { duration: 0.4, ease: easeExpoOut },
   },
 };
 
 // ─── Press scale (tap feedback) ────────────────────────
 export const scaleOnTap = {
   whileTap: { scale: 0.97 } as TargetAndTransition,
-  transition: { type: "spring", stiffness: 400, damping: 17 },
+  transition: { type: "spring" as const, stiffness: 400, damping: 17 },
 };
 
 // ─── Hover lift ────────────────────────────────────────
@@ -68,7 +70,7 @@ export const scrollReveal: Variants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, ease: easeExpoOut as unknown as number[] },
+    transition: { duration: 0.7, ease: easeExpoOut },
   },
 };
 
@@ -91,6 +93,6 @@ export const listItem: Variants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.3, ease: easeExpoOut as unknown as number[] },
+    transition: { duration: 0.3, ease: easeExpoOut },
   },
 };
