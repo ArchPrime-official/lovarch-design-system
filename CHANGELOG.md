@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.5.1 — 2026-06-12
+
+### Changed
+
+- **Package `name` aligned to `@archprime/lovarch-ds`** (era `@archprime/lovarch-design-system`).
+  Ambos os consumidores (PrimeTeam e `ByPabloRuanL/lovarch`) já importavam via o alias Vite
+  `@archprime/lovarch-ds` → `squads/lovarch-design-system/src`, então o rename não exigiu
+  mudança de config em nenhum consumidor — apenas remove a divergência name↔chave de import.
+
 ## Unreleased — 2026-06-12
 
 **Audit fixes (Fase 7 of `2026-06-12-squads-prd-audit-implementation-plan.md`).** No new

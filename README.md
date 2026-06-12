@@ -4,14 +4,12 @@ Shared design system distributed as a **git submodule** to Lovarch + PrimeTeam (
 
 > ⚠️ **NEVER edit files inside a consumer's `squads/lovarch-design-system/` directly.** Edit here, push, then run `bump-all-squads.sh` in each consumer.
 
-> **Package name divergence (known, intentional for now):**
-> `package.json` declares `name: "@archprime/lovarch-design-system"`, but both consumers
-> (PrimeTeam and repo `ByPabloRuanL/lovarch`) resolve it via the Vite alias
-> `"@archprime/lovarch-ds"` — **not** via npm install. The `name` field is therefore unused
-> at runtime. Renaming it to `@archprime/lovarch-ds` requires a coordinated change in both
-> consumers' `vite.config.ts` and `package.json`, and has been deferred to avoid risk.
-> Until then: **always use `@archprime/lovarch-ds/...` in import statements** regardless of
-> what `package.json name` says.
+> **Package name (aligned in v0.5.1):**
+> `package.json` declares `name: "@archprime/lovarch-ds"`, matching the import key both
+> consumers (PrimeTeam and repo `ByPabloRuanL/lovarch`) already use. Both resolve it via the
+> Vite alias `"@archprime/lovarch-ds"` → `squads/lovarch-design-system/src` (plus matching
+> tsconfig paths), **not** via npm install — so the rename needed no consumer config change.
+> **Always use `@archprime/lovarch-ds/...` in import statements.**
 
 ## Install (consumer apps)
 
@@ -219,7 +217,7 @@ the same rule.
 ## Roadmap
 
 - v0.5.x — multi-domain theming hooks (ArchPrime.io vs Lovarch variants)
-- v0.x — rename `package.json name` from `@archprime/lovarch-design-system` to `@archprime/lovarch-ds` (coordinated with both consumers)
+- ~~v0.x — rename `package.json name` to `@archprime/lovarch-ds`~~ ✅ feito em v0.5.1
 - Backlog — extract shared core for the `blocks` ↔ `lp-blocks` duplicates (navbar/footer/faq/carousel), so a fix lands once instead of twice
 - Backlog — replace the 7 `placehold.co` URLs in `templates/lp-v3.ts` and `templates/lp-premium.ts` with hosted Lovarch Storage assets once stable URLs exist (the block schemas require absolute `.url()` values, so these admin-replaceable seeds stay on placehold.co until real assets are uploaded)
 
