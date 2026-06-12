@@ -1,5 +1,49 @@
 # Changelog
 
+## v0.5.0 — 2026-06-12
+
+**3 new CMS blocks: `ecosystem`, `stats`, `replaces` — parity with lovarch.com/lp-v3.**
+
+Closes the block gap between the DS and the live lp-v3 layout. All three blocks follow the
+established pattern (`schema.ts` + `index.tsx`, framer-motion, DS V8 tokens) and are registered
+in `registry.ts` (`AnyBlockSchema` + `BLOCK_REGISTRY`).
+
+`AnyBlockSchema` discriminated union: 10 → **13 types**.
+`BLOCK_REGISTRY`: 10 → **13 entries**.
+
+### Added
+
+- **`blocks/ecosystem`** — N-phase flow section (designed for the 5 Lovarch phases:
+  diagnose → create → communicate → manage → grow). Each phase has `label`, `title`,
+  `description`, optional `icon`, and an optional `featureList`. Light/dark variants.
+  - `src/blocks/ecosystem/schema.ts` — `EcosystemSchema` + `EcosystemPhaseSchema`
+  - `src/blocks/ecosystem/index.tsx` — animated phase stepper with framer-motion stagger
+
+- **`blocks/stats`** — metric grid (value + label pairs), 1–6 items. Useful for social-proof
+  numbers above the fold ("1 200 architetti formati", "98% di soddisfazione", etc.).
+  Light/dark variants.
+  - `src/blocks/stats/schema.ts` — `StatsSchema` + `StatItemSchema`
+  - `src/blocks/stats/index.tsx` — responsive CSS grid, animated counter on scroll
+
+- **`blocks/replaces`** — tag cloud of tools/workflows the platform replaces, with an
+  optional footer line (e.g. "Tutto in un'unica piattaforma"). Useful in comparison
+  sections and sales pages.
+  - `src/blocks/replaces/schema.ts` — `ReplacesSchema`
+  - `src/blocks/replaces/index.tsx` — wrapping flex tag cloud, dark-only variant
+
+### Changed
+
+- `src/blocks/index.ts` — exports `EcosystemBlock`, `StatsBlock`, `ReplacesBlock`
+- `src/blocks/registry.ts` — adds entries for `ecosystem`, `stats`, `replaces` to
+  `BLOCK_REGISTRY` and extends `AnyBlockSchema` discriminated union
+
+### Migration
+
+Backwards-compatible. All existing pages with the previous 10 block types continue working
+unchanged. New blocks are additive.
+
+---
+
 ## v0.4.1 — 2026-05-04
 
 **New block: `lead-form` — captura de lead nativa nas páginas CMS.**
