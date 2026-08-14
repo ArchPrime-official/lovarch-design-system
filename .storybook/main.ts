@@ -1,4 +1,5 @@
 import type { StorybookConfig } from "@storybook/react-vite";
+import remarkGfm from "remark-gfm";
 
 /**
  * Storybook 10 — catalogue for @archprime/lovarch-ds.
@@ -14,7 +15,17 @@ const config: StorybookConfig = {
   stories: ["../src/**/*.stories.@(ts|tsx)", "../src/**/*.mdx"],
 
   addons: [
-    "@storybook/addon-docs",
+    {
+      name: "@storybook/addon-docs",
+      options: {
+        // Storybook's MDX does not enable GFM, so a pipe table renders as a
+        // paragraph of literal pipes. The subpath table on the Introduction
+        // page is the whole point of that page, so tables must work.
+        mdxPluginOptions: {
+          mdxCompileOptions: { remarkPlugins: [remarkGfm] },
+        },
+      },
+    },
     "@storybook/addon-themes",
     "@storybook/addon-a11y",
   ],
