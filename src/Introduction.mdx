@@ -1,0 +1,80 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Introduction" />
+
+# Lovarch Design System
+
+The shared component library behind Lovarch, PrimeTeam and Donna — `@archprime/lovarch-ds`.
+
+## The rule this catalogue exists to serve
+
+> **Before creating a generic or shared component, look for it here.** If it belongs to the
+> shared vocabulary, create it here first — with a story — and only then consume it from the app.
+
+Scoped to shared vocabulary on purpose. The 60 shadcn components inside the app's
+`src/components/ui/` are vendor code copied in by convention, and the ~746 feature panels
+change too fast to document — a story for `new-home/` would be stale before it merged.
+
+### Why the rule earns its keep
+
+Two numbers, measured on 14/08/2026:
+
+- **532** app files import the local shadcn components; **316** import this package.
+- **88%** of all consumption of this package is a single component — `LovarchSymbolLoader`,
+  289 of 330 imports.
+
+`GlassCard`, `LovarchAlert`, `AmbientGlow`, `BackgroundEffects`, every `lp-block`, every
+template and the whole `brand` subpath had **zero** imports. Not because they are unwanted —
+because nobody could see they existed. That is the gap this catalogue closes.
+
+## How to import
+
+There is no build step. The `exports` map points straight at `./src`, and consumers alias
+`@archprime/lovarch-ds` to `squads/lovarch-design-system/src`, so what you read here is
+what ships. Import by subpath — the root barrel works, but `./components` is a deprecated
+barrel and should not be used.
+
+| Subpath | Exports |
+| --- | --- |
+| `@archprime/lovarch-ds/feedback` | `LovarchSymbolLoader`, `GlassCard`, `LovarchAlert` |
+| `@archprime/lovarch-ds/charts` | `LovarchBarList`, `LovarchProgressCircle`, `LovarchTracker` |
+| `@archprime/lovarch-ds/animated` | `NumberTicker`, `AnimatedList`, `AnimatedListItem`, `ShimmerButton`, `DotPattern`, `GridPattern` |
+| `@archprime/lovarch-ds/effects` | `ConstellationParticles`, `AmbientGlow`, `BackgroundEffects` |
+| `@archprime/lovarch-ds/blocks` | CMS blocks + `BLOCK_REGISTRY` (a Zod schema per block) |
+| `@archprime/lovarch-ds/brand` | `LovarchLogo`, `LovarchSymbol` |
+| `@archprime/lovarch-ds/motion` | `stagger`, `fadeInUp`, `scaleOnTap`, `hoverLift`, `scrollReveal` |
+
+## Reading a story
+
+**Theme.** The toolbar toggle switches a `dark` class on the root, because
+`tailwind-preset.ts` sets `darkMode: ["class"]`. Light `#FAF9F7` is the base and dark
+`#09090B` is opt-in — `prefers-color-scheme` never picks the theme. Every story should be
+checked in both.
+
+**Viewport.** Stories open at **375px**, the minimum supported width, and are widened
+deliberately. Several components carry an explicit `Mobile` story where the narrow case is
+the interesting one.
+
+**Colour.** Blue is banned. The accent is gold `#A16207`; status colours are `emerald-500`,
+`amber-500`, `purple-500` and `red-400`. Nothing in this catalogue restates a colour — the
+CSS entry imports `src/tokens/*.css` directly, so a story cannot drift from the tokens a
+consumer renders.
+
+## Adding a story
+
+Put it beside the component as `<component>.stories.tsx`. Cover the states someone would
+otherwise have to read the source to discover: every variant, the empty case, the skewed or
+overflowing case, and the 375px case. Where a component has a trap, say so in the
+description — `LovarchTracker` documents a real hover-only tooltip that does not work on
+touch, and `LovarchAlert` documents that three of its four variants share one colour. A
+catalogue that only shows the happy path sends people back to the source.
+
+## Changing this package
+
+It is a git submodule, so it is never edited in place from a consumer repo. Work in
+[`ArchPrime-official/lovarch-design-system`](https://github.com/ArchPrime-official/lovarch-design-system):
+branch, PR, merge, then `bump-all-squads.sh` to propagate. Local iteration is instant even
+so — the consumer alias reads source, so a change is visible in the app immediately, and the
+PR is only needed to share it with the other repos.
+
+Tracked in Lovarch issue **#2786**.

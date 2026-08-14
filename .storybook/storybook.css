@@ -1,0 +1,30 @@
+/**
+ * Storybook CSS entry.
+ *
+ * Imports the DS token files themselves rather than restating any value, so a
+ * story can never drift from what a consumer app renders. Nothing here defines
+ * a colour, a font or a radius.
+ *
+ * Order is load-bearing:
+ *   1. fonts.css   — contains an `@import url(...)`, which CSS requires to come first
+ *   2. tokens.css  — its own header says consumers must import it before @tailwind
+ *   3. globals.css — uses `@apply`, so it needs the theme from the preset
+ *
+ * All three wrap their rules in `@layer base`, so Tailwind hoists them into the
+ * base layer in source order: tokens land before globals, which is why
+ * `* { @apply border-border }` resolves.
+ */
+@import "../src/tokens/fonts.css";
+@import "../src/tokens/tokens.css";
+@import "../src/tokens/globals.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Storybook's own canvas, so a story sits on the real page background instead of
+   the addon's default white — which would hide a light-on-light regression. */
+body {
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
