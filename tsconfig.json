@@ -20,5 +20,5 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src", "tailwind-preset.ts"]
+  "include": ["src", "tailwind-preset.ts", "tailwind.config.ts", ".storybook"]
 }
