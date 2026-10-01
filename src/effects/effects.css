@@ -1,0 +1,74 @@
+/* Lovarch Design System V8 — efeitos animados em CSS puro.
+   Importe uma vez no consumidor: `@archprime/lovarch-ds/effects/effects.css`.
+   Sem @layer (vale fora do Tailwind). Todos respeitam prefers-reduced-motion.
+
+   1) Keyframes dos fundos (AmbientGlow usa glowDrift inline).
+   2) "IA trabalhando" — o efeito dourado de quando a IA reescreve/gera:
+      .lv-prompt-enhancing   glow pulsante no campo (borda + halo)
+      .lv-enhance-icon-active ícone (Wand/Sparkles) balança e pulsa
+      .lv-enhance-btn-active  varredura dourada no fundo do botão
+      .lv-text-sweep-overlay  brilho que atravessa o texto (overlay sobre o campo)
+   Origem: prompt enhancer do Render Studio (RenderEnhanceButton). */
+
+@keyframes glowDrift {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(30px, -20px); }
+  100% { transform: translate(-20px, 30px); }
+}
+
+@keyframes lvEnhanceGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 1px hsl(var(--accent) / 0.25), 0 0 14px 0 hsl(var(--accent) / 0.16);
+  }
+  50% {
+    box-shadow: 0 0 0 1px hsl(var(--accent) / 0.55), 0 0 26px 3px hsl(var(--accent) / 0.42);
+  }
+}
+.lv-prompt-enhancing {
+  border-radius: 14px;
+  caret-color: hsl(var(--accent));
+  animation: lvEnhanceGlow 1.1s ease-in-out infinite;
+}
+
+@keyframes lvEnhanceIcon {
+  0%   { transform: rotate(-6deg) scale(1);    opacity: 0.75; }
+  50%  { transform: rotate(8deg)  scale(1.18); opacity: 1; }
+  100% { transform: rotate(-6deg) scale(1);    opacity: 0.75; }
+}
+.lv-enhance-icon-active { animation: lvEnhanceIcon 0.85s ease-in-out infinite; }
+
+@keyframes lvEnhanceSweep {
+  0%   { background-position: -150% 0; }
+  100% { background-position: 250% 0; }
+}
+.lv-enhance-btn-active {
+  background-image: linear-gradient(100deg,
+    hsl(var(--accent) / 0) 20%,
+    hsl(var(--accent) / 0.25) 50%,
+    hsl(var(--accent) / 0) 80%);
+  background-size: 200% 100%;
+  animation: lvEnhanceSweep 1.1s linear infinite;
+}
+
+@keyframes lvTextSweep {
+  0%   { background-position: 150% 0; }
+  100% { background-position: -50% 0; }
+}
+.lv-text-sweep-overlay {
+  background-image: linear-gradient(100deg,
+    hsl(var(--accent) / 0) 40%,
+    hsl(var(--accent) / 0.55) 50%,
+    hsl(var(--accent) / 0) 60%);
+  background-size: 220% 100%;
+  background-repeat: no-repeat;
+  mix-blend-mode: plus-lighter;
+  animation: lvTextSweep 1.15s linear infinite;
+  border-radius: 12px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lv-prompt-enhancing,
+  .lv-enhance-icon-active,
+  .lv-enhance-btn-active,
+  .lv-text-sweep-overlay { animation: none; }
+}

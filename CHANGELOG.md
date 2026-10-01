@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.6.1 — 2026-10-01
+
+**Movimento na documentação e na marca.**
+
+### Added
+- `/brand`: `LovarchMark3D` — o símbolo 3D animado do login (icosaedro em wireframe + hub dourado), promovido do app; `currentColor` nas linhas, `--accent` no hub, `speed`, pausa com a aba oculta e respeita `prefers-reduced-motion`. `LOVARCH_EMAIL_ANIMATIONS` (3 GIFs dos e-mails de módulo).
+- `/effects/effects.css` (export `./effects/effects.css`): keyframes `glowDrift` e os efeitos "IA trabalhando" (`lv-prompt-enhancing`, `lv-enhance-icon-active`, `lv-enhance-btn-active`, `lv-text-sweep-overlay`), movidos do `index.css` da Lovarch.
+- Effects: prop `contained` em ConstellationParticles/AmbientGlow/BackgroundEffects (ocupam o pai em vez da janela); `particleColor` e `forceOnMobile` nas partículas; partículas pausam com a aba oculta.
+- Docs: seções **Movimento (ao vivo)**, **Loading e IA trabalhando**, **Efeitos, fundos, animados**, **Gráficos** e o bloco **Marca em movimento** (Mark3D, SymbolLoader, GIFs de e-mail). 16 seções no total.
+
 ## v0.6.0 — 2026-10-01
 
 **Fundações, primitivos, marca e documentação viva — o DS deixa de ser "o loader".**

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export function AmbientGlow() {
+export function AmbientGlow({ contained = false }: { /** absolute no pai em vez de fixed na janela */ contained?: boolean } = {}) {
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
@@ -12,7 +12,7 @@ export function AmbientGlow() {
   }, []);
 
   return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
+    <div className={`${contained ? "absolute" : "fixed"} inset-0 pointer-events-none overflow-hidden`} style={{ zIndex: 0 }}>
       {/* Gold accent glow — top right */}
       <div
         className="absolute -top-32 -right-16 w-[500px] h-[500px] rounded-full blur-[160px] animate-glow-drift"

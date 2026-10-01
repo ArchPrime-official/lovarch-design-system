@@ -5,7 +5,8 @@
  *   import { LovarchLogo, LovarchSymbol, PoweredByLovarch } from "@archprime/lovarch-ds/brand";
  *   import { LOVARCH_OG_IMAGE_URL, LOVARCH_EMAIL_LOGO_DARK_URL } from "@archprime/lovarch-ds/brand";
  *
- * For the animated symbol (loading state), import from `/feedback`:
+ * Animated mark (login/splash hero): `LovarchMark3D` — exported here.
+ * For the animated symbol as LOADING state, import from `/feedback`:
  *   import { LovarchSymbolLoader } from "@archprime/lovarch-ds/feedback";
  *
  * Brand spec (variants, theme, clear space, minimum sizes, don'ts): `docs/brand.md`.
@@ -19,6 +20,7 @@ export {
   type LovarchLogoSize,
 } from "./LovarchLogo";
 export { LovarchSymbol } from "./LovarchSymbol";
+export { LovarchMark3D, type LovarchMark3DProps } from "./LovarchMark3D";
 export { PoweredByLovarch, type PoweredByLovarchProps } from "./PoweredByLovarch";
 export {
   LOVARCH_TAGLINE,
@@ -36,6 +38,7 @@ export {
   LOVARCH_OG_IMAGE_URL,
   LOVARCH_FAVICON_URL,
   LOVARCH_LOGO_ASSETS,
+  LOVARCH_EMAIL_ANIMATIONS,
   type LovarchBrandAsset,
   type LovarchRasterVariant,
 } from "./assets";

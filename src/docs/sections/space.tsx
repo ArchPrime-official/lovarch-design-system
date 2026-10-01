@@ -12,7 +12,7 @@ export function SpaceSection() {
   return (
     <Section
       id="espaco"
-      title="Espaço, forma e movimento"
+      title="Espaço, forma, z-index e ícones"
       intro="Escala de 4px, cinco raios com uso definido, quatro níveis de sombra, durações nomeadas, uma escala de z-index e cinco tamanhos de ícone."
     >
       <Demo title="Espaçamento (base 4px)" note="gap-*/p-* do Tailwind; nomes de uso">
@@ -52,7 +52,7 @@ export function SpaceSection() {
         <div className="mt-3 rounded-xl border border-accent/20 bg-card p-4 shadow-glow"><p className="font-mono text-caption text-foreground">shadow-glow</p><p className="text-caption text-muted-foreground">halo dourado — só prompt bar e elemento "IA ativa"</p></div>
       </Demo>
 
-      <Demo title="Motion" note="Framer Motion para componentes · animate-in só para entrada de overlay">
+      <Demo title="Motion — tokens" note="demonstração ao vivo na seção Movimento">
         <Spec
           rows={[
             ["Durações", <span><Mono>duration-fast</Mono> 150ms hover/press · <Mono>duration-base</Mono> 200ms cor/borda · <Mono>duration-slow</Mono> 300ms layout/barras · <Mono>duration-reveal</Mono> 700ms entrada em scroll</span>],
