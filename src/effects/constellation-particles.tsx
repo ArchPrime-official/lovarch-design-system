@@ -9,16 +9,28 @@ interface Particle {
   o: number;
 }
 
-export function ConstellationParticles() {
+export interface ConstellationParticlesProps {
+  /** Ocupa o elemento pai (absolute) em vez da janela (fixed). Use dentro de cards/heros. */
+  contained?: boolean;
+  /** Também anima no mobile (default: desligado abaixo de 768px, por bateria). */
+  forceOnMobile?: boolean;
+  className?: string;
+  /** Cor dos pontos. `auto` segue o tema do <html> (branco no dark, preto no light). */
+  particleColor?: "auto" | "white" | "black";
+}
+
+export function ConstellationParticles({ contained = false, forceOnMobile = false, className, particleColor = "auto" }: ConstellationParticlesProps = {}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particles = useRef<Particle[]>([]);
   const animRef = useRef<number>(0);
 
   const getColor = useCallback(() => {
+    if (particleColor === "white") return "255,255,255";
+    if (particleColor === "black") return "0,0,0";
     return document.documentElement.classList.contains("dark")
       ? "255,255,255"
       : "0,0,0";
-  }, []);
+  }, [particleColor]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -26,14 +38,15 @@ export function ConstellationParticles() {
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const isMobile = window.innerWidth < 768;
-    if (reduced || isMobile) return;
+    if (reduced || (isMobile && !forceOnMobile)) return;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const host = contained ? canvas.parentElement : null;
+      canvas.width = host ? host.clientWidth : window.innerWidth;
+      canvas.height = host ? host.clientHeight : window.innerHeight;
     };
     resize();
 
@@ -50,6 +63,10 @@ export function ConstellationParticles() {
     const connectionDist = 130;
 
     const draw = () => {
+      if (document.hidden) {
+        animRef.current = requestAnimationFrame(draw);
+        return;
+      }
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       const rgb = getColor();
       const pts = particles.current;
@@ -92,12 +109,12 @@ export function ConstellationParticles() {
       cancelAnimationFrame(animRef.current);
       window.removeEventListener("resize", resize);
     };
-  }, [getColor]);
+  }, [getColor, contained, forceOnMobile]);
 
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none"
+      className={`${contained ? "absolute" : "fixed"} inset-0 pointer-events-none ${className ?? ""}`}
       style={{ zIndex: 1, opacity: 0.8 }}
     />
   );

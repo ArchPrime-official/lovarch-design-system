@@ -131,3 +131,14 @@ Props: `label` (obrigatório, já traduzido) · `href` (default `https://lovarch
 | URLs + tabela de dimensões | `src/brand/assets.ts` (`LOVARCH_LOGO_ASSETS`, `LOVARCH_TAGLINE`) |
 | PNGs | `src/brand/assets/` |
 | Wrapper legado no app (deprecated) | `Lovarch/src/components/ThemeAwareLogo.tsx` |
+
+## Marca em movimento (v0.6.1)
+
+| Componente | O que é | Onde usar |
+|---|---|---|
+| `LovarchMark3D` (`/brand`) | icosaedro em wireframe girando, hub dourado, 3 conexões acendendo do centro | login/auth, splash, páginas de marca, fim de vídeo |
+| `LovarchSymbolLoader` (`/feedback`) | 13 neurônios convergindo em onda (3,6 s) + rótulo varrido | **só** carregamento (80 card · 96 seção · 120 tela) |
+| `LovarchSymbol` (`/brand`) | símbolo estático em SVG | favicon, marca d'água, badges |
+| `LOVARCH_EMAIL_ANIMATIONS` | GIFs dos e-mails de ativação (inbox, social, WhatsApp) | e-mails transacionais |
+
+Linhas sempre na cor do texto (`currentColor`); o dourado é só o hub. Mark3D ≠ loader — não troque um pelo outro.

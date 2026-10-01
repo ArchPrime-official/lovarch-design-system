@@ -132,3 +132,16 @@ export const LOVARCH_LOGO_ASSETS: Record<
     dark: { src: logoEmailUrl, width: 1024, height: 434 },
   },
 };
+
+// ── Animações de e-mail (GIF) ────────────────────────────────────────────────
+// Cópias para documentação (a menor entre o original 800×600 e uma 480×360); os originais
+// ficam em `public/email/` do app (https://app.lovarch.com/email/<nome>.gif).
+import emailGifCollegatoUrl from "./assets/motion/lovarch-collegato.gif";
+import emailGifSocialUrl from "./assets/motion/lovarch-social.gif";
+import emailGifWhatsappUrl from "./assets/motion/lovarch-whatsapp.gif";
+
+export const LOVARCH_EMAIL_ANIMATIONS = [
+  { id: "collegato", src: emailGifCollegatoUrl, liveUrl: "https://app.lovarch.com/email/lovarch-collegato.gif", use: "Inbox unificado (WhatsApp + DM + comentários)" },
+  { id: "social", src: emailGifSocialUrl, liveUrl: "https://app.lovarch.com/email/lovarch-social.gif", use: "Social Studio / publicação" },
+  { id: "whatsapp", src: emailGifWhatsappUrl, liveUrl: "https://app.lovarch.com/email/lovarch-whatsapp.gif", use: "WhatsApp conectado" },
+] as const;
