@@ -1,5 +1,27 @@
 # Changelog
 
+## v0.6.0 — 2026-10-01
+
+**Fundações, primitivos, marca e documentação viva — o DS deixa de ser "o loader".**
+
+### Added
+- `src/tokens/tokens.json` como FONTE DA VERDADE + `scripts/build-tokens.mjs` (gera `tokens.css`, `tokens.ts` para Vite/Node/Deno e `tailwind-tokens.ts`). Novos tokens: `content` (roxo), `chart-1..6`, `backdrop`, `line/line-soft/line-strong`, durações e easings nomeados, escala de z-index, famílias por papel, escala tipográfica `micro/caption/dense/hero/hero-lg`, `tracking-eyebrow`, `max-w-layout-*`.
+- `/primitives` (subpath novo): Button (accent/xl/loading/icons), IconButton, Chip, Badge, IconBadge, Avatar+initials, Heading/Text/Eyebrow/PanelTitle/SectionLabel/Kpi/Mono, Card (card/surface/glass/selected/ghost), Divider, Field/Input/Textarea, Spinner, Skeleton, ProgressBar, Stat/StatGrid, EmptyState/ErrorState, Banner, Modal (bottom-sheet no mobile)+ModalFrame, DataTable+Table*.
+- `/brand`: LovarchLogo reescrito (variant horizontal/icon/vertical/slogan/symbol/email · theme auto/light/dark · size/height · proporção real), `PoweredByLovarch`, `useLovarchTheme`, 8 PNGs novos (light/dark por variante), `LOVARCH_LOGO_ASSETS`, OG 1200×630 claro.
+- `/docs`: `DsDocument` + 12 seções (cor, tipografia, espaço/forma/motion, ações, identidade, superfícies, formulário, feedback, overlay, padrões, marca, governança) — a mesma árvore alimenta a rota `/ds` da Lovarch e o HTML estático offline.
+- `docs/primitives-a.md`, `docs/primitives-b.md`, `docs/brand.md`.
+
+### Changed
+- `--accent-foreground` dark `240 7% 94%` → `0 0% 100%` (texto sobre dourado é branco nos dois temas).
+- `--warning` light `38 92% 50%` → `32 95% 44%` (contraste).
+- `tokens.css` não usa mais ` base` (só variáveis; funciona em qualquer ordem e fora do Tailwind).
+- `tailwind-preset.ts` deriva tudo de `tailwind-tokens.ts`.
+- `package.json`: exports `./primitives`, `./tokens`, `./tokens/json`, `./docs`; peer `-ui/react-slot`.
+
+### Consumer notes
+- Lovarch: `main.tsx` importa `/lovarch-ds/tokens/tokens.css`; `tailwind.config.ts` usa o preset; `ui/button|card|input|textarea` re-exportam o DS. Card passa de `rounded-2xl border/60 bg-card/80 blur` para `rounded-xl border-line bg-card`.
+- PrimeTeam: nada quebra (subpaths antigos intactos); adotar o preset quando migrar para light-first.
+
 ## v0.5.1 — 2026-06-12
 
 ### Changed

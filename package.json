@@ -1,6 +1,6 @@
 {
   "name": "@archprime/lovarch-ds",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "type": "module",
   "private": true,
   "description": "Lovarch Design System V8 — shared submodule (tokens, motion, components, blocks)",
@@ -29,7 +29,11 @@
     "./lp-blocks": "./src/lp-blocks/index.ts",
     "./templates": "./src/templates/index.ts",
     "./brand": "./src/brand/index.ts",
-    "./brand/assets/*": "./src/brand/assets/*"
+    "./brand/assets/*": "./src/brand/assets/*",
+    "./primitives": "./src/primitives/index.ts",
+    "./tokens": "./src/tokens/tokens.ts",
+    "./tokens/json": "./src/tokens/tokens.json",
+    "./docs": "./src/docs/index.ts"
   },
   "peerDependencies": {
     "react": "^18.3.1",
@@ -42,12 +46,15 @@
     "tailwind-merge": "^2.5.0",
     "class-variance-authority": "^0.7.0",
     "@radix-ui/react-dialog": "^1.1.0",
-    "@radix-ui/react-select": "^2.1.0"
+    "@radix-ui/react-select": "^2.1.0",
+    "@radix-ui/react-slot": "^1.1.0"
   },
   "scripts": {
     "lint": "echo 'lint via consumer'",
     "typecheck": "tsc --noEmit",
-    "validate:templates": "tsx scripts/validate-templates.ts"
+    "validate:templates": "tsx scripts/validate-templates.ts",
+    "build:tokens": "node scripts/build-tokens.mjs",
+    "check:tokens": "node scripts/build-tokens.mjs --check"
   },
   "devDependencies": {
     "@types/react": "^18.3.0",
