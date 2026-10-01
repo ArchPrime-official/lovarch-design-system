@@ -1,9 +1,15 @@
 /**
  * Lovarch Design System V8 — Tailwind preset
- * Consumer apps: add this preset in tailwind.config.ts under `presets: [...]`
- * MUST also include in `content`: "./squads/lovarch-design-system/src/**\/*.{ts,tsx}"
+ *
+ * Consumer apps: `presets: [lovarchPreset]` em tailwind.config.ts e
+ * "./squads/lovarch-design-system/src/**\/*.{ts,tsx}" em `content`.
+ *
+ * Tudo que é valor (cores, tamanhos, z-index, durações…) vem de
+ * src/tokens/tailwind-tokens.ts, GERADO de tokens.json. Aqui ficam só
+ * container, keyframes e animações.
  */
 import type { Config } from "tailwindcss";
+import { tailwindTokens } from "./src/tokens/tailwind-tokens";
 
 const preset: Partial<Config> = {
   darkMode: ["class"],
@@ -14,77 +20,7 @@ const preset: Partial<Config> = {
       screens: { "2xl": "1200px" },
     },
     extend: {
-      colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-          light: "hsl(var(--primary-light))",
-          dark: "hsl(var(--primary-dark))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-          light: "hsl(var(--accent-light))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
-        warning: {
-          DEFAULT: "hsl(var(--warning))",
-          foreground: "hsl(var(--warning-foreground))",
-        },
-        success: {
-          DEFAULT: "hsl(var(--success))",
-          foreground: "hsl(var(--success-foreground))",
-        },
-        gold: {
-          DEFAULT: "hsl(38 90% 33%)",
-          light: "hsl(40 64% 55%)",
-          dark: "hsl(24 83% 31%)",
-        },
-      },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-      },
-      fontFamily: {
-        sans: ["Inter", "sans-serif"],
-        inter: ["Inter", "sans-serif"],
-        playfair: ["Playfair Display", "serif"],
-        "dm-sans": ["DM Sans", "sans-serif"],
-        outfit: ["Outfit", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"],
-      },
-      boxShadow: {
-        sm: "var(--shadow-sm)",
-        md: "var(--shadow-md)",
-        lg: "var(--shadow-lg)",
-        xl: "var(--shadow-xl)",
-        glow: "var(--shadow-glow)",
-      },
+      ...(tailwindTokens as unknown as NonNullable<Config["theme"]>["extend"]),
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
@@ -102,12 +38,28 @@ const preset: Partial<Config> = {
           "0%": { opacity: "0", transform: "translateY(16px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
+        "glow-drift": {
+          "0%": { transform: "translate(0, 0)" },
+          "50%": { transform: "translate(25px, -18px)" },
+          "100%": { transform: "translate(-18px, 25px)" },
+        },
+        "glow-pulse": {
+          "0%, 100%": { opacity: "0.5", transform: "scale(1)" },
+          "50%": { opacity: "1", transform: "scale(1.05)" },
+        },
+        "scroll-reveal": {
+          from: { opacity: "0", transform: "translateY(24px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-in": "fade-in 0.4s ease-out",
         "fade-in-up": "fade-in-up 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
+        "glow-drift": "glow-drift 25s ease-in-out infinite alternate",
+        "glow-pulse": "glow-pulse 4s ease-in-out infinite",
+        "scroll-reveal": "scroll-reveal 0.8s cubic-bezier(0.16,1,0.3,1) both",
       },
     },
   },
