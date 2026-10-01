@@ -1,5 +1,5 @@
 /** Componentes · Superfícies e dados — Card, Divider, DataTable. */
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Divider, DataTable, Table, TableHeader, TableBody, TableRow, TableHead, TableCell, TableEmpty, Badge, Button, Mono } from "../../primitives";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Divider, DataTable, TableHeader, TableBody, TableRow, TableHead, TableCell, TableEmpty, Badge, Button, Mono } from "../../primitives";
 import { Section, Demo, Grid, Rules, Rule, Spec, Code } from "../shared";
 
 const ROWS = [
@@ -42,23 +42,21 @@ export function SurfacesSection() {
         </div>
       </Demo>
       <Demo title="DataTable" note="rola no mobile (minWidth) · th micro uppercase · numeric">
-        <DataTable minWidth={560}>
-          <Table>
-            <TableHeader><TableRow><TableHead>Nome</TableHead><TableHead>Tipo</TableHead><TableHead>Stato</TableHead><TableHead numeric>Valore</TableHead></TableRow></TableHeader>
-            <TableBody>
-              {ROWS.map(([n, t, s, v]) => (
-                <TableRow key={n}>
-                  <TableCell className="font-medium text-foreground">{n}</TableCell>
-                  <TableCell className="text-muted-foreground">{t}</TableCell>
-                  <TableCell><Badge tone={s === "attivo" ? "success" : s === "concluso" ? "neutral" : "warning"} dot>{s}</Badge></TableCell>
-                  <TableCell numeric>{v}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+        <DataTable minWidth={560} aria-label="Progetti">
+          <TableHeader><TableRow><TableHead>Nome</TableHead><TableHead>Tipo</TableHead><TableHead>Stato</TableHead><TableHead numeric>Valore</TableHead></TableRow></TableHeader>
+          <TableBody>
+            {ROWS.map(([n, t, s, v]) => (
+              <TableRow key={n}>
+                <TableCell className="font-medium text-foreground">{n}</TableCell>
+                <TableCell className="text-muted-foreground">{t}</TableCell>
+                <TableCell><Badge tone={s === "attivo" ? "success" : s === "concluso" ? "neutral" : "warning"} dot>{s}</Badge></TableCell>
+                <TableCell numeric>{v}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
         </DataTable>
         <div className="mt-3">
-          <DataTable minWidth={320}><Table><TableBody><TableRow><TableEmpty colSpan={3}>Nessun risultato</TableEmpty></TableRow></TableBody></Table></DataTable>
+          <DataTable minWidth={320} aria-label="Vuoto"><TableBody><TableEmpty colSpan={3}>Nessun risultato</TableEmpty></TableBody></DataTable>
         </div>
       </Demo>
       <Spec
