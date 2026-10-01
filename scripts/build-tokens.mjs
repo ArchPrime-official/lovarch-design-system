@@ -62,45 +62,44 @@ function buildCss() {
   const easings = Object.fromEntries(Object.entries(tokens.easing).map(([k, v]) => [`ease-${k}`, v]));
   const z = Object.fromEntries(Object.entries(tokens.zIndex).map(([k, v]) => [`z-${k}`, String(v)]));
   const fonts = Object.fromEntries(Object.entries(tokens.font.family).map(([k, v]) => [`font-${k}`, v]));
+  // Sem `@layer base`: só variáveis CSS, válidas em qualquer contexto (Vite/PostCSS,
+  // plugin CAD, HTML estático) e em qualquer ordem em relação às diretivas @tailwind.
   return `/* Lovarch Design System V8 — Tokens
    ${HEADER}
-   Light = base (#FAF9F7). Dark = opt-in via classe .dark (nunca prefers-color-scheme).
-   Importe ANTES das diretivas @tailwind do consumidor. */
+   Light = base (#FAF9F7). Dark = opt-in via classe .dark (nunca prefers-color-scheme). */
 
-@layer base {
-  :root {
-    /* Cores semânticas — HSL sem hsl() para o Tailwind aplicar alpha (bg-accent/10) */
-${cssBlock(L)}
+:root {
+  /* Cores semânticas — HSL sem hsl() para o Tailwind aplicar alpha (bg-accent/10) */
+${cssBlock(L, "  ")}
 
-    /* Sombras */
-${cssBlock(SL)}
+  /* Sombras */
+${cssBlock(SL, "  ")}
 
-    /* Raio */
-${cssBlock(tokens.radius)}
+  /* Raio */
+${cssBlock(tokens.radius, "  ")}
 
-    /* Transições (legado) + durações e easings nomeados */
-${cssBlock(tokens.transition)}
-${cssBlock(durations)}
-${cssBlock(easings)}
+  /* Transições (legado) + durações e easings nomeados */
+${cssBlock(tokens.transition, "  ")}
+${cssBlock(durations, "  ")}
+${cssBlock(easings, "  ")}
 
-    /* z-index */
-${cssBlock(z)}
+  /* z-index */
+${cssBlock(z, "  ")}
 
-    /* Famílias tipográficas */
-${cssBlock(fonts)}
+  /* Famílias tipográficas */
+${cssBlock(fonts, "  ")}
 
-    /* Superfícies e valores literais — Light */
-${cssBlock(RL)}
-  }
+  /* Superfícies e valores literais — Light */
+${cssBlock(RL, "  ")}
+}
 
-  .dark {
-${cssBlock(D)}
+.dark {
+${cssBlock(D, "  ")}
 
-${cssBlock(SD)}
+${cssBlock(SD, "  ")}
 
-    /* Superfícies e valores literais — Dark */
-${cssBlock(RD)}
-  }
+  /* Superfícies e valores literais — Dark */
+${cssBlock(RD, "  ")}
 }
 `;
 }

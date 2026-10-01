@@ -19,7 +19,7 @@ import { Sparkles, X } from "lucide-react";
 import { cn } from "../lib/cn";
 
 const chipVariants = cva(
-  "inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border font-medium transition-colors duration-base ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 active:scale-[0.97]",
+  "inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border font-medium transition-all duration-base ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 active:scale-[0.97]",
   {
     variants: {
       size: {

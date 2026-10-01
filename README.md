@@ -67,10 +67,31 @@ export default {
 ### Import tokens once in `main.tsx`
 
 ```ts
-import "@archprime/lovarch-ds/tokens/css";
-import "@archprime/lovarch-ds/tokens/fonts";
-import "@archprime/lovarch-ds/tokens/globals";
+// Vite alias (string) NÃO lê `exports` do package.json: use o caminho do arquivo.
+import "@archprime/lovarch-ds/tokens/tokens.css";   // :root + .dark — só variáveis, qualquer ordem
+// opcional: fonts.css (Google Fonts) e globals.css (@layer base — importe DEPOIS do @tailwind base)
 ```
+
+### Tokens (v0.6.0) — uma fonte, vários formatos
+
+`src/tokens/tokens.json` é a fonte da verdade. `node scripts/build-tokens.mjs` gera:
+
+| Gerado | Para |
+|---|---|
+| `src/tokens/tokens.css` | app (Vite), plugins, HTML estático |
+| `src/tokens/tokens.ts` | TS sem imports — Vite, Node **e Deno** (`hex.light.accent`, `fontFamily.heading`, `zIndex.modal`) |
+| `src/tokens/tailwind-tokens.ts` | consumido por `tailwind-preset.ts` (`bg-surface`, `border-line`, `text-micro/caption/dense`, `z-modal`, `duration-fast`, `tracking-eyebrow`…) |
+
+`node scripts/build-tokens.mjs --check` sai 1 se algum gerado estiver desatualizado (CI).
+
+### Primitives (v0.6.0)
+
+```ts
+import { Button, IconButton, Chip, Badge, IconBadge, Avatar, Card, Field, Input, Modal, EmptyState, Banner, PanelTitle, Kpi } from "@archprime/lovarch-ds/primitives";
+```
+
+Referência por componente: `docs/primitives-a.md`, `docs/primitives-b.md`, `docs/brand.md`.
+Documentação viva renderizável: `import { DsDocument } from "@archprime/lovarch-ds/docs"`.
 
 ## Subpaths
 

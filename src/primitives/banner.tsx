@@ -15,7 +15,7 @@
  */
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { AlertTriangle, CheckCircle2, Info, Sparkles, X } from "lucide-react";
+import { AlertTriangle, CheckCircle2, Info, Sparkles, X, XCircle } from "lucide-react";
 import { cn } from "../lib/cn";
 
 const bannerVariants = cva("flex items-start gap-3 rounded-xl border px-3 py-2.5 text-sm text-foreground", {
@@ -38,7 +38,7 @@ const toneIcon: Record<BannerTone, React.ComponentType<{ className?: string }>> 
   accent: Sparkles,
   success: CheckCircle2,
   warning: AlertTriangle,
-  danger: AlertTriangle,
+  danger: XCircle,
 };
 
 const toneIconClass: Record<BannerTone, string> = {

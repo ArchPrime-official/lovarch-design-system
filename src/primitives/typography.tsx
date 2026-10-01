@@ -239,16 +239,5 @@ const Mono = React.forwardRef<HTMLElement, MonoProps>(({ className, ...props }, 
 ));
 Mono.displayName = "Mono";
 
-export {
-  Heading,
-  Text,
-  Eyebrow,
-  PanelTitle,
-  SectionLabel,
-  Kpi,
-  Mono,
-  headingSizes,
-  textVariants,
-  eyebrowVariants,
-  kpiVariants,
-};
+export { Heading, Text, Eyebrow, PanelTitle, SectionLabel, Kpi, Mono };
+export { headingSizes, textVariants, eyebrowVariants, kpiVariants };
