@@ -82,7 +82,10 @@ const ModalDescription = React.forwardRef<
 ModalDescription.displayName = "ModalDescription";
 
 const ModalBody = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => <div ref={ref} className={cn("min-h-0 flex-1", className)} {...props} />
+  // O corpo é quem ROLA: sem overflow próprio ele encolhia (min-h-0) e o conteúdo longo vazava
+  // por baixo do rodapé — as últimas linhas ficavam inalcançáveis (lista de 13 vistas, 08/10/2026).
+  // `-mx-1 px-1` devolve o espaço do anel de foco que o overflow cortaria nas bordas.
+  ({ className, ...props }, ref) => <div ref={ref} className={cn("-mx-1 min-h-0 flex-1 overflow-y-auto px-1", className)} {...props} />
 );
 ModalBody.displayName = "ModalBody";
 
