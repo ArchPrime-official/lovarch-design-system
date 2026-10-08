@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.6.2 — 2026-10-08
+
+### Fixed
+- `Modal`: o corpo (`ModalBody`) agora rola (`overflow-y-auto`). Antes ele encolhia (`min-h-0`) sem rolagem e o conteúdo longo vazava por baixo do rodapé — as últimas linhas de uma lista ficavam cobertas e inalcançáveis. Cabeçalho e rodapé ficam visíveis enquanto o corpo rola.
+
 ## v0.6.1 — 2026-10-01
 
 **Movimento na documentação e na marca.**

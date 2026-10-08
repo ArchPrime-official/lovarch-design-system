@@ -287,6 +287,8 @@ Diálogo Radix. Mobile = bottom sheet (`rounded-t-2xl`, `max-h-[90dvh]`, safe-ar
 | `trigger` | `ReactNode` | — | Elemento que abre (`DialogTrigger asChild`). |
 | `className` | `string` | — | Classes extras no content. |
 
+O **corpo rola** (`ModalBody` tem `overflow-y-auto`): conteúdo longo — uma lista de 13 vistas, um formulário grande — rola por dentro com o cabeçalho e o rodapé sempre visíveis. Não envolva os children num `div` com altura fixa para "consertar" rolagem.
+
 Partes exportadas para composição livre: `ModalHeader`, `ModalTitle`, `ModalDescription`, `ModalBody`, `ModalFooter`.
 
 ### `ModalFrame`
