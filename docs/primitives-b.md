@@ -282,12 +282,12 @@ Diálogo Radix. Mobile = bottom sheet (`rounded-t-2xl`, `max-h-[90dvh]`, safe-ar
 | `description` | `ReactNode` | — | Descrição (`ModalDescription`). |
 | `size` | `sm \| md \| lg \| xl \| full` | `md` | `sm:max-w-sm` / `-lg` / `-2xl` / `-4xl` / `calc(100vw-48px)`. |
 | `footer` | `ReactNode` | — | Botões (no mobile empilhados e full-width, o último do JSX fica em cima). |
-
-O **corpo rola** (`ModalBody` tem `overflow-y-auto`): conteúdo longo — uma lista de 13 vistas, um formulário grande — rola por dentro com o cabeçalho e o rodapé sempre visíveis. Não envolva os children num `div` com altura fixa para "consertar" rolagem.
 | `hideClose` | `boolean` | `false` | Esconde o X. |
 | `closeLabel` | `string` | — (obrigatório) | `aria-label` do X. |
 | `trigger` | `ReactNode` | — | Elemento que abre (`DialogTrigger asChild`). |
 | `className` | `string` | — | Classes extras no content. |
+
+O **corpo rola** (`ModalBody` tem `overflow-y-auto`): conteúdo longo — uma lista de 13 vistas, um formulário grande — rola por dentro com o cabeçalho e o rodapé sempre visíveis. Não envolva os children num `div` com altura fixa para "consertar" rolagem.
 
 Partes exportadas para composição livre: `ModalHeader`, `ModalTitle`, `ModalDescription`, `ModalBody`, `ModalFooter`.
 
