@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.6.3 — 2026-10-11
+
+### Fixed
+- `cn` agora conhece a escala tipográfica do DS (`micro`, `caption`, `xs`, `dense`, `sm`… `hero`, `hero-lg`). O tailwind-merge padrão lia `text-caption`/`text-micro`/`text-dense`/`text-hero` como COR de texto e os descartava quando vinham junto de uma cor (`text-muted-foreground`, `text-accent-foreground`): desde a v0.6.0 o `Chip` `size="sm"`, o `Badge`, o `Eyebrow`, `FieldHint`/`FieldError`, o `Avatar` xs/sm e o `Text` nesses tamanhos saíam com a fonte herdada (16 px). Exporta `DS_FONT_SIZES` e `twMergeDs` para o app usar o mesmo merge.
+
 ## v0.6.2 — 2026-10-08
 
 ### Fixed
