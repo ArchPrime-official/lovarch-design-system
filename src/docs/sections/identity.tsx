@@ -1,6 +1,6 @@
-/** Componentes · Identidade e números — IconBadge, Avatar, Stat, ProgressBar, Spinner, Skeleton. */
+/** Componentes · Identidade e números — IconBadge, Avatar, Stat, ProgressBar, LevelBars, Spinner, Skeleton. */
 import { Image, Lightbulb, Zap, FileText, Users, Euro } from "lucide-react";
-import { IconBadge, Avatar, initials, Stat, StatGrid, ProgressBar, Spinner, Skeleton, SkeletonText, Mono } from "../../primitives";
+import { IconBadge, Avatar, initials, Stat, StatGrid, ProgressBar, LevelBars, Spinner, Skeleton, SkeletonText, Mono } from "../../primitives";
 import { Section, Demo, Row, Rules, Rule, Code } from "../shared";
 
 export function IdentitySection() {
@@ -52,6 +52,15 @@ export function IdentitySection() {
           <ProgressBar value={82} size="lg" tone="warning" label="Spazio" valueLabel="82 / 100 GB" ariaLabel="Spazio" />
           <ProgressBar value={100} tone="danger" ariaLabel="Limite" />
           <ProgressBar value={50} tone="foreground" ariaLabel="Neutro" />
+        </div>
+      </Demo>
+      <Demo title="LevelBars" note="value · max · tone · size — escala curta (força do modelo, esforço), não progresso">
+        <div className="space-y-2">
+          <Row><LevelBars value={1} tone="success" label="Forza 1 di 4" /><span className="text-dense">Econômico · Claude Haiku 5.5</span></Row>
+          <Row><LevelBars value={2} tone="neutral" label="Forza 2 di 4" /><span className="text-dense">Potente · Claude Sonnet 5.5</span></Row>
+          <Row><LevelBars value={3} tone="warning" label="Forza 3 di 4" /><span className="text-dense">Ótimo · Claude Opus 5.5</span></Row>
+          <Row><LevelBars value={4} tone="content" label="Forza 4 di 4" /><span className="text-dense">Excelente · Claude Fable 5.1</span></Row>
+          <Row><LevelBars value={2} max={3} size="sm" label="Sforzo 2 di 3" /><span className="text-dense">Esforço · Equilibrado</span></Row>
         </div>
       </Demo>
       <Demo title="Loading" note="Spinner inline 14–24 · Skeleton só para layout conhecido">

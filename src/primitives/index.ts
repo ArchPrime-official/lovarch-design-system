@@ -53,6 +53,7 @@ export {
 export { Spinner, type SpinnerProps } from "./spinner";
 export { Skeleton, SkeletonText, type SkeletonProps, type SkeletonTextProps } from "./skeleton";
 export { ProgressBar, progressTrackVariants, progressFillVariants, type ProgressBarProps } from "./progress-bar";
+export { LevelBars, levelBarVariants, type LevelBarsProps, type LevelBarsTone } from "./level-bars";
 export { Stat, StatGrid, type StatProps, type StatGridProps, type StatDelta } from "./stat";
 export { EmptyState, ErrorState } from "./empty-state";
 export type { EmptyStateProps, ErrorStateProps } from "./empty-state";

@@ -246,6 +246,24 @@ Mesmas props de `Input` (sem `htmlSize`), `min-h-[80px]`.
 
 ---
 
+## LevelBars (`level-bars.tsx`)
+
+Nível em barrinhas (1 de N). Não é progresso (`ProgressBar`): é uma escala curta e fixa, lida de relance.
+
+| Prop | Tipo | Padrão | |
+|---|---|---|---|
+| `value` | number | — | barras preenchidas (limitado a 0–max) |
+| `max` | number | 4 | total de barras |
+| `tone` | `success` · `neutral` · `warning` · `content` · `accent` | `neutral` | cor das preenchidas |
+| `size` | `sm` · `md` | `md` | |
+| `label` | string | — | leitor de tela (`role="img"`); sem ele, decorativo |
+
+Força de modelo de IA na Lovarch: 1 `success` (econômico) · 2 `neutral` (potente) · 3 `warning` (ótimo) · 4 `content` (excelente). O dourado (`accent`) fica para o CTA.
+
+```tsx
+<LevelBars value={2} max={4} tone="neutral" label={t("ai.strength_label", { n: 2 })} />
+```
+
 ## Card (`card.tsx`)
 
 Superfície de agrupamento. Sub-componentes com os mesmos nomes e classes do `card.tsx` do shadcn (re-export compatível), mais `variant`, `padding` e `interactive` no `Card`.

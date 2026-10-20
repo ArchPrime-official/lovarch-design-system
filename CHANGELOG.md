@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.6.4 — 2026-10-20
+
+### Added
+- `LevelBars` (`/primitives`): nível em barrinhas (1 de N) para comparar opções de relance — força de um modelo de IA (1 econômico · 2 potente · 3 ótimo · 4 excelente) e esforço (rápido · equilibrado · aprofundado). Tons `success`/`neutral`/`warning`/`content`/`accent`, tamanhos `sm`/`md`, `label` vira `role="img"` (sem `label` é decorativo). Nasceu para os seletores de modelo do Progetta, do ArchChat e dos plugins de CAD. Demo na seção «Identidade e números».
+
 ## v0.6.3 — 2026-10-11
 
 ### Fixed
