@@ -56,13 +56,20 @@ const QUADRO_PADRAO: LovaFrame = { top: 0.2006, feet: 0.8685, left: 0.2401, righ
 /** O rostinho no quadro: um quadrado centrado entre a boina e a pinta. */
 export const LOVA_FACE_CROP = { cx: 0.5, cy: 0.425, side: 0.48 };
 
-/** Tamanho e posição do quadro do clipe para o Lova ficar com `altura` px, pés no fundo da caixa. */
+/**
+ * Tamanho e posição do quadro do clipe para o Lova ocupar a ALTURA da caixa, pés no fundo — em % da caixa, para seguir
+ * qualquer CSS de quem usa (ex.: a LovaHome encolhe o mascote no celular com classes). `side` (px) só escolhe o arquivo.
+ */
 export function bodyLayout(frame: LovaFrame | null | undefined, altura: number): { side: number; style: CSSProperties } {
   const f = frame ?? QUADRO_PADRAO;
-  const side = Math.round(altura / (f.feet - f.top));
+  const k = 1 / (f.feet - f.top);
+  const pct = (v: number) => `${+(v * 100).toFixed(3)}%`;
   return {
-    side,
-    style: { position: "absolute", left: "50%", marginLeft: -Math.round(f.cx * side), top: Math.round(altura - f.feet * side) },
+    side: Math.round(altura * k),
+    style: {
+      position: "absolute", height: pct(k), width: "auto", aspectRatio: "1 / 1",
+      top: pct(1 - f.feet * k), left: "50%", transform: `translateX(${pct(-f.cx)})`,
+    },
   };
 }
 

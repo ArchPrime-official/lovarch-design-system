@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.8.3 — 2026-10-24
+
+### Fixed
+- Lova animado: o quadro do corpo (`bodyLayout`) é posicionado em **% da caixa** do `LovaMascot` (altura, topo e centro) em vez de px — segue o CSS de quem usa (a `LovaHome` encolhe o mascote no celular com classes; em px o Lova saía maior que a caixa). O `style` passado ao `LovaAnimated` agora pode trocar a largura/altura.
+
 ## v0.8.2 — 2026-10-24
 
 ### Changed
