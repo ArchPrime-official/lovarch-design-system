@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.8.4 — 2026-10-24
+
+### Fixed
+- Lova animado: o pôster parado (rostinho em repouso, `prefers-reduced-motion`, `animated={false}`) saía como uma **fatia estreita do corpo** no chip de 24 px. Causa: o `<img>` era a própria caixa do quadro (50 px) e o preflight do Tailwind (`img { max-width: 100% }`) o espremia para a largura do pai (24×50). Agora a mídia — pôster ou vídeo — sempre enche uma caixa `<span>` quadrada (`data-lova-quadro`), com `max-width: none`; o vídeo ganhou o mesmo cinto.
+
 ## v0.8.3 — 2026-10-24
 
 ### Fixed
