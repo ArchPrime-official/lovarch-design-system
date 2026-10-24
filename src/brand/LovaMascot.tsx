@@ -6,7 +6,8 @@
  *   • `LovaAvatar` — o rostinho (boina + rosto + a pinta de coração), 24–36 px, ao lado das respostas.
  *
  * As imagens são as OFICIAIS (renders da Sandra) recortadas com alfa — nunca redesenhe, nunca gere outra pose com IA,
- * nunca corte a pinta de coração, nunca estique (só escala UNIFORME, até 1,015). Estados da seção 11.13 do plano:
+ * nunca corte a pinta de coração, nunca estique o corpo nem a mídia (só escala UNIFORME, até 1,015; nos clipes do
+ * rig 3D os braços de borracha podem alongar — ver docs/brand.md). Estados da seção 11.13 do plano:
  *   idle (repouso, branco) · listening (= repouso até a pose chegar) · thinking/working (translúcido com o símbolo)
  *   · delivered (aceso por inteiro) · happy (feliz) · shy (tímido, ao receber elogio) · sad (errou e mostra a saída).
  * «Bravo» e «sem paciência» não existem aqui: nunca são dirigidos à pessoa. `LOVA_ASSETS.light` é a luz da
