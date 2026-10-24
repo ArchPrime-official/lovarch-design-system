@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.8.2 — 2026-10-24
+
+### Changed
+- Lova animado: o rostinho (`LovaAvatar`) em repouso (`idle`/`listening`) desenha o pôster parado do clipe em vez do vídeo — cada resposta do chat tem um rostinho e uma conversa longa teria dezenas de vídeos. Os rostinhos «vivos» (pensando, entregou, erro, trabalhando, precisa de você) continuam tocando. `FACE_STILL` exportado.
+
 ## v0.8.1 — 2026-10-24
 
 ### Changed
