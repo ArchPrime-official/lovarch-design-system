@@ -4,6 +4,7 @@
 
 ### Changed
 - Lova animado: o rostinho (`LovaAvatar`) em repouso (`idle`/`listening`) desenha o pôster parado do clipe em vez do vídeo — cada resposta do chat tem um rostinho e uma conversa longa teria dezenas de vídeos. Os rostinhos «vivos» (pensando, entregou, erro, trabalhando, precisa de você) continuam tocando. `FACE_STILL` exportado.
+- O quadro do clipe que transborda a caixa do corpo não pega clique (`pointer-events-none`).
 
 ## v0.8.1 — 2026-10-24
 

@@ -5,7 +5,8 @@
  *   <LovaRendererContext.Provider value={renderer}> … telas do Lova … </LovaRendererContext.Provider>
  *
  * - `variant="body"`: o Lova fica com a MESMA altura da arte estática (pés no fundo da caixa); o quadro do clipe é
- *   maior que ele (pulo, braços para cima, as formas) e transborda a caixa para cima e para os lados, sem cortar.
+ *   maior que ele (pulo, braços para cima, as formas) e transborda a caixa para cima e para os lados, sem cortar —
+ *   e sem pegar clique (`pointer-events-none`): quem recebe o toque é a caixa de quem usa.
  * - `variant="face"`: o rostinho (boina, rosto e a pinta) recortado do clipe pequeno — pisca e respira também.
  *   O rostinho é sempre o Lova (as formas por tela são do corpo).
  * - `animated={false}` no corpo → o pôster parado do estado.
@@ -83,7 +84,8 @@ export function LovaClipView({ manifest, baseUrl, state, form, variant, size, an
   const inst = ev === "working" && !face ? LOVA_FORM_INSTRUMENT[form] : null;
   const view = (
     <LovaAnimated manifest={manifest} baseUrl={baseUrl} size={side} screen={face ? "home" : LOVA_FORM_SCREEN[form]}
-      state={ev} instrument={inst} still={face ? FACE_STILL.includes(state) : !animated} style={style} />
+      state={ev} instrument={inst} still={face ? FACE_STILL.includes(state) : !animated} style={style}
+      className="pointer-events-none" />
   );
   // o rostinho recorta (caixa própria, relativa); o corpo pode transbordar a caixa (pulo, braços, formas)
   return face ? <span className="relative block overflow-hidden" style={{ width: size, height: size }}>{view}</span> : view;
