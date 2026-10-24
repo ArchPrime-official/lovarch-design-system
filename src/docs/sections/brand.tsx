@@ -79,7 +79,7 @@ export function BrandSection() {
           <div className="rounded-xl border border-line bg-background p-5">
             <div className="flex flex-wrap items-end gap-4">
               {LOVA_STATES.map((s) => (
-                <div key={s} className="flex flex-col items-center gap-1"><LovaMascot state={s} height={96} animated={s === "idle"} /><span className="font-mono text-micro text-muted-foreground">{s}</span></div>
+                <div key={s} className="flex flex-col items-center gap-1"><LovaMascot state={s} height={96} animated /><span className="font-mono text-micro text-muted-foreground">{s}</span></div>
               ))}
             </div>
             <div className="mt-4 flex items-center gap-3">

@@ -147,37 +147,39 @@ Linhas sempre na cor do texto (`currentColor`); o dourado é só o hub. Mark3D �
 
 O **Lova** é o agente principal da Lovarch (bíblia aprovada em 23/10/2026). Ele tem rosto: o hexágono do símbolo em
 silicone branco, luz quente por dentro, boina preta e **sempre a pinta de coração dourada**. As artes são os renders
-oficiais da Sandra, só com o fundo tirado (rembg/BiRefNet local, sem API paga) — **nunca redesenhe, nunca gere outra
-pose com IA, nunca corte a pinta**.
+oficiais da Sandra recortados com alfa (exportação do Claude Design de 24/10/2026) — **nunca redesenhe, nunca gere
+outra pose com IA, nunca corte a pinta, nunca estique** (só escala uniforme, até 1,015).
 
 ```tsx
-import { LovaMascot, LovaAvatar } from "@archprime/lovarch-ds/brand";
+import { LovaMascot, LovaAvatar, LOVA_ASSETS } from "@archprime/lovarch-ds/brand";
 
-<LovaMascot state="idle" height={160} animated priority />   // início do chat
-<LovaMascot state="thinking" height={64} animated label="Lova" /> // cantinho com a barra oculta
+<LovaMascot state="idle" height={150} animated priority />   // início do chat
+<LovaMascot state="working" height={72} animated />           // cantinho com a barra oculta (56 no celular)
 <LovaAvatar state="delivered" size={28} />                     // ao lado de uma resposta
+<img src={LOVA_ASSETS.light} alt="" />                         // a luz da transição barra ↔ cantinho
 ```
 
-| `state` | Arte | Quando |
-|---|---|---|
-| `idle` | branco, olhos abertos | esperando |
-| `listening` | = `idle` (até a animação da L7) | a pessoa está digitando ou falando |
-| `thinking` / `working` | translúcido, o símbolo aceso por dentro | montando o plano, executando, com fila |
-| `delivered` | aceso por inteiro (com `animated`, dá um pulinho) | terminou |
-| `happy` | feliz | comemoração leve |
-| `shy` | tímido (mãos na boca, brilhinhos) | recebeu um elogio |
-| `sad` | triste | errou — e em seguida mostra a correção |
+| `state` | Arte | Movimento (`animated`) | Quando |
+|---|---|---|---|
+| `idle` | branco, olhos abertos | respira 4,8 s | esperando |
+| `listening` | = `idle` (até a pose chegar) | respira | a pessoa está digitando ou falando |
+| `thinking` / `working` | translúcido, o símbolo aceso por dentro | a luz pulsa 2,4 s | montando o plano, executando, com fila |
+| `delivered` | aceso por inteiro | respira | terminou (rostinho da última resposta) |
+| `happy` | feliz | pulinho 1,4 s, uma vez | entregou (no cantinho) |
+| `shy` | tímido (mãos na boca, brilhinhos) | — | recebeu um elogio |
+| `sad` | triste | — | errou — e em seguida mostra a correção |
 
-«Bravo» e «sem paciência» **não existem** aqui: nunca são dirigidos à pessoa.
+«Bravo» e «sem paciência» **não existem** aqui: nunca são dirigidos à pessoa. Piscar, olhar de lado, acenar, ajeitar a
+boina, segurar o cartãozinho («precisa de você»), ouvir e falar **esperam as poses novas** da equipe 3D — não se
+simulam com máscara sobre a arte.
 
 | Arquivo (`src/brand/assets/lova/`) | Tamanho | Peso |
 |---|---|---|
-| `lova-<estado>.webp` (corpo, alfa) | 600 px de altura | 16–28 KB |
-| `lova-<estado>-face.webp` (rosto, alfa) | 112×112 | 3–4 KB |
+| `lova-<estado>.webp` (corpo, alfa) | 600 px de altura | 24–54 KB |
+| `lova-<estado>-face.webp` (rosto, alfa) | 128×128 | 4–9 KB |
+| `lova-light.webp` (a luz da transição) | 240×240 | 18 KB |
 
-- **Movimento** (`animated`): respira (4,2 s), pisca a cada ~5 s (pálpebra da cor da pele só no repouso e no aceso) e
-  pula uma vez ao virar `delivered`. Com `prefers-reduced-motion` fica parado.
 - **Acessibilidade**: decorativo por padrão (`aria-hidden`); com `label` vira `role="img"`. Num botão, o nome vai no
-  botão («Mostra Lova»), não na imagem.
-- **Tamanhos**: rosto 24–36 px; corpo 56–72 px no cantinho, 120–170 px no início.
+  botão («Mostra Lova»), não na imagem. Com `prefers-reduced-motion` tudo fica parado.
+- **Tamanhos**: rosto 24–36 px; corpo 56 (celular) / 72 (desktop) no cantinho, 120–150 px no início.
 - **Fundo**: a arte é recortada — funciona no claro e no escuro sem moldura. Não ponha círculo nem sombra colorida.
