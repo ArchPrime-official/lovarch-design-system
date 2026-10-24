@@ -3,7 +3,7 @@
 ## v0.7.0 — 2026-10-24
 
 ### Added
-- `/brand`: `LovaMascot` (corpo inteiro) e `LovaAvatar` (rostinho 24–36 px) — o mascote do agente Lova, com os estados da interface (`idle`, `listening`, `thinking`/`working`, `delivered`, `happy`, `shy`, `sad`), as artes OFICIAIS recortadas com alfa em WebP (corpo 600 px ≤ 54 KB, rosto 128 px ≤ 9 KB, a luz da transição), movimento opcional com os keyframes do Claude Design (respira com escala uniforme ≤ 1,015, a luz pulsa trabalhando, pulinho feliz uma vez) parado com `prefers-reduced-motion`, `lovaArt()`, `lovaMotion()` e `LOVA_ASSETS`. Doc em `docs/brand.md` e demo na seção «Marca».
+- `/brand`: `LovaMascot` (corpo inteiro) e `LovaAvatar` (rostinho 24–36 px) — o mascote do agente Lova, com os estados da interface (`idle`, `listening`, `thinking`/`working`, `delivered`, `happy`, `shy`, `sad`), as artes OFICIAIS recortadas com alfa em WebP (corpo 600 px ≤ 54 KB, rosto 128 px ≤ 9 KB, a luz da transição), movimento opcional com os keyframes do Claude Design (respira com escala uniforme ≤ 1,015, a luz pulsa trabalhando, pulinho feliz uma vez) parado com `prefers-reduced-motion`, `lovaArt()`, `lovaMotion()` e `LOVA_ASSETS`. API aberta para o Lova animado: estados `idle · listening · thinking · working · speaking · delivered · praised · error · needs_approval` (+ `happy · shy · sad`), `form` (`lova · compass · scale_ruler · house · helmet`) e renderizador trocável (`renderer` / `LovaRendererContext`). Doc em `docs/brand.md` e demo na seção «Marca».
 
 ## v0.6.4 — 2026-10-20
 

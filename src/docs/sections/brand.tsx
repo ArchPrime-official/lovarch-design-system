@@ -7,7 +7,7 @@ import { LovarchSymbolLoader } from "../../feedback/lovarch-loader";
 import { PoweredByLovarch } from "../../brand/PoweredByLovarch";
 import { LovaMascot, LovaAvatar, type LovaState } from "../../brand/LovaMascot";
 
-const LOVA_STATES: LovaState[] = ["idle", "thinking", "delivered", "happy", "shy", "sad"];
+const LOVA_STATES: LovaState[] = ["idle", "thinking", "delivered", "happy", "praised", "error"];
 import { Mono } from "../../primitives";
 import { Section, Demo, Grid, Rules, Rule, Spec, Code } from "../shared";
 

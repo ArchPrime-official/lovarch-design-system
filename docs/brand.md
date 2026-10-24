@@ -159,15 +159,25 @@ import { LovaMascot, LovaAvatar, LOVA_ASSETS } from "@archprime/lovarch-ds/brand
 <img src={LOVA_ASSETS.light} alt="" />                         // a luz da transição barra ↔ cantinho
 ```
 
-| `state` | Arte | Movimento (`animated`) | Quando |
+| `state` | Arte de hoje | Movimento (`animated`) | Quando |
 |---|---|---|---|
-| `idle` | branco, olhos abertos | respira 4,8 s | esperando |
-| `listening` | = `idle` (até a pose chegar) | respira | a pessoa está digitando ou falando |
+| `idle` | repouso (branco) | respira 4,8 s | esperando |
+| `listening` | repouso (até a pose «ouvindo») | respira | a pessoa está digitando ou falando |
 | `thinking` / `working` | translúcido, o símbolo aceso por dentro | a luz pulsa 2,4 s | montando o plano, executando, com fila |
+| `speaking` | aceso (até a pose «falando») | respira | a resposta está chegando |
 | `delivered` | aceso por inteiro | respira | terminou (rostinho da última resposta) |
+| `needs_approval` | repouso (até a pose «segurando o cartãozinho») + o ponto dourado da tela | respira | um cartão espera o «sì» |
+| `praised` / `shy` | tímido (mãos na boca, brilhinhos) | — | recebeu um elogio |
+| `error` / `sad` | triste | — | errou — e em seguida mostra a correção |
 | `happy` | feliz | pulinho 1,4 s, uma vez | entregou (no cantinho) |
-| `shy` | tímido (mãos na boca, brilhinhos) | — | recebeu um elogio |
-| `sad` | triste | — | errou — e em seguida mostra a correção |
+
+**Forma** (`form`: `lova` · `compass` · `scale_ruler` · `house` · `helmet`): o Lova vira o instrumento da tarefa
+(Progetta → compasso, orçamento → escalímetro, render → casinha, obra → capacete). Estático hoje: todas desenham o
+Lova; a forma vai no `data-lova-form` e no renderizador.
+
+**Renderizador trocável**: `renderer` (prop) ou `LovaRendererContext` (árvore inteira) recebem
+`{ state, form, variant: "body" | "face", size, animated, priority }` e desenham no lugar da arte estática — é por aí
+que entra o Lova animado (clipes com alfa + máquina de estados) sem mudar quem usa `LovaMascot`/`LovaAvatar`.
 
 «Bravo» e «sem paciência» **não existem** aqui: nunca são dirigidos à pessoa. Piscar, olhar de lado, acenar, ajeitar a
 boina, segurar o cartãozinho («precisa de você»), ouvir e falar **esperam as poses novas** da equipe 3D — não se

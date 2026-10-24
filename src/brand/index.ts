@@ -23,7 +23,10 @@ export {
 export { LovarchSymbol } from "./LovarchSymbol";
 export { LovarchMark3D, type LovarchMark3DProps } from "./LovarchMark3D";
 export { PoweredByLovarch, type PoweredByLovarchProps } from "./PoweredByLovarch";
-export { LovaMascot, LovaAvatar, lovaArt, LOVA_ASSETS, type LovaState, type LovaMascotProps, type LovaAvatarProps } from "./LovaMascot";
+export {
+  LovaMascot, LovaAvatar, lovaArt, lovaMotion, LOVA_ASSETS, LovaRendererContext,
+  type LovaState, type LovaForm, type LovaRenderer, type LovaRenderProps, type LovaMascotProps, type LovaAvatarProps,
+} from "./LovaMascot";
 export {
   LOVARCH_TAGLINE,
   LOVARCH_LOGO_HORIZONTAL_DARK_URL,

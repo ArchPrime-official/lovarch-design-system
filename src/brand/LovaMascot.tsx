@@ -20,6 +20,7 @@
  *   <LovaMascot state="idle" height={150} animated />
  *   <LovaAvatar state="thinking" size={28} />
  */
+import { createContext, useContext, type ReactNode } from "react";
 import { motion, useReducedMotion, type MotionProps } from "framer-motion";
 import idleBody from "./assets/lova/lova-idle.webp";
 import idleFace from "./assets/lova/lova-idle-face.webp";
@@ -36,7 +37,33 @@ import sadFace from "./assets/lova/lova-sad-face.webp";
 import lightArt from "./assets/lova/lova-light.webp";
 import { cn } from "../lib/cn";
 
-export type LovaState = "idle" | "listening" | "thinking" | "working" | "delivered" | "happy" | "shy" | "sad";
+/**
+ * O estado do Lova (o mesmo vocabulário em todas as telas; quem decide é a tela/servidor):
+ *   idle · listening · thinking · working · speaking · delivered · praised · error · needs_approval
+ * e as expressões diretas happy · shy · sad (aliases das artes). Sem pose própria ainda, cada estado usa a arte
+ * oficial mais próxima (`lovaArt`) — a versão animada (clipes com alfa) entra pelo `renderer` sem mudar quem usa.
+ */
+export type LovaState =
+  | "idle" | "listening" | "thinking" | "working" | "speaking" | "delivered" | "praised" | "error" | "needs_approval"
+  | "happy" | "shy" | "sad";
+
+/** A forma do Lova por tela (ele vira o instrumento da tarefa). Estático hoje: todas desenham o Lova. */
+export type LovaForm = "lova" | "compass" | "scale_ruler" | "house" | "helmet";
+
+/** O que um renderizador (estático hoje, animado depois) recebe. */
+export interface LovaRenderProps {
+  state: LovaState;
+  form: LovaForm;
+  /** "body" = corpo inteiro (altura em px) · "face" = rostinho (lado em px) */
+  variant: "body" | "face";
+  size: number;
+  animated: boolean;
+  priority: boolean;
+}
+export type LovaRenderer = (props: LovaRenderProps) => ReactNode;
+
+/** Troca o desenho do Lova para uma árvore inteira (ex.: o player animado), sem tocar em quem usa. */
+export const LovaRendererContext = createContext<LovaRenderer | null>(null);
 
 type ArtKey = "idle" | "thinking" | "delivered" | "happy" | "shy" | "sad";
 type Art = { key: ArtKey; body: string; face: string; ratio: number };
@@ -53,9 +80,14 @@ const ART: Record<ArtKey, Art> = {
 
 /** O desenho de cada estado (listening e working usam a arte mais próxima até as poses novas). */
 export function lovaArt(state: LovaState = "idle"): Art {
-  if (state === "thinking" || state === "working") return ART.thinking;
-  if (state === "listening") return ART.idle;
-  return ART[state] ?? ART.idle;
+  switch (state) {
+    case "thinking": case "working": return ART.thinking;
+    case "speaking": case "delivered": return ART.delivered;
+    case "praised": case "shy": return ART.shy;
+    case "error": case "sad": return ART.sad;
+    case "happy": return ART.happy;
+    default: return ART.idle; // idle · listening · needs_approval (até as poses novas)
+  }
 }
 
 /** O movimento de cada arte: respirar (repouso), pulsar a luz (trabalhando), pulinho (feliz) ou nada. */
@@ -74,6 +106,10 @@ const MOTION: Record<"breathe" | "work" | "hop", Pick<MotionProps, "animate" | "
 
 export interface LovaMascotProps {
   state?: LovaState;
+  /** A forma por tela (estático hoje: sempre o Lova). */
+  form?: LovaForm;
+  /** Desenha com outro renderizador (precede o `LovaRendererContext`). */
+  renderer?: LovaRenderer;
   /** Altura em px (a largura segue a proporção real da arte). */
   height?: number;
   /** Respira / pulsa / pulinho. Parado com `prefers-reduced-motion`. */
@@ -85,8 +121,10 @@ export interface LovaMascotProps {
   className?: string;
 }
 
-export function LovaMascot({ state = "idle", height = 160, animated = false, label, priority = false, className }: LovaMascotProps) {
+export function LovaMascot({ state = "idle", form = "lova", renderer, height = 160, animated = false, label, priority = false, className }: LovaMascotProps) {
   const reduced = useReducedMotion();
+  const ctxRenderer = useContext(LovaRendererContext);
+  const custom = renderer ?? ctxRenderer;
   const art = lovaArt(state);
   const kind = animated && !reduced ? lovaMotion(art.key) : null;
   const width = Math.round(height * art.ratio);
@@ -98,8 +136,9 @@ export function LovaMascot({ state = "idle", height = 160, animated = false, lab
       aria-label={label}
       aria-hidden={label ? undefined : true}
       data-lova-state={state}
+      data-lova-form={form}
     >
-      <motion.img
+      {custom ? custom({ state, form, variant: "body", size: height, animated: animated && !reduced, priority }) : <motion.img
         key={art.key}
         src={art.body}
         alt=""
@@ -109,13 +148,15 @@ export function LovaMascot({ state = "idle", height = 160, animated = false, lab
         className="pointer-events-none absolute inset-0 block size-full object-contain"
         style={{ transformOrigin: "50% 100%" }}
         {...(kind ? MOTION[kind] : {})}
-      />
+      />}
     </span>
   );
 }
 
 export interface LovaAvatarProps {
   state?: LovaState;
+  form?: LovaForm;
+  renderer?: LovaRenderer;
   /** Lado em px (24–36 nas respostas; o arquivo tem 128 px para telas 3x). */
   size?: number;
   label?: string;
@@ -123,8 +164,18 @@ export interface LovaAvatarProps {
 }
 
 /** O rostinho do Lova: boina, rosto e a pinta de coração. Sem fundo, sem círculo. */
-export function LovaAvatar({ state = "idle", size = 28, label, className }: LovaAvatarProps) {
+export function LovaAvatar({ state = "idle", form = "lova", renderer, size = 28, label, className }: LovaAvatarProps) {
   const art = lovaArt(state);
+  const ctxRenderer = useContext(LovaRendererContext);
+  const custom = renderer ?? ctxRenderer;
+  if (custom) {
+    return (
+      <span className={cn("inline-block shrink-0", className)} style={{ width: size, height: size }} role={label ? "img" : undefined}
+        aria-label={label} aria-hidden={label ? undefined : true} data-lova-state={state} data-lova-form={form}>
+        {custom({ state, form, variant: "face", size, animated: false, priority: false })}
+      </span>
+    );
+  }
   return (
     <img
       src={art.face}
@@ -135,6 +186,7 @@ export function LovaAvatar({ state = "idle", size = 28, label, className }: Lova
       draggable={false}
       decoding="async"
       data-lova-state={state}
+      data-lova-form={form}
       className={cn("pointer-events-none inline-block shrink-0 select-none object-contain", className)}
       style={{ width: size, height: size }}
     />
