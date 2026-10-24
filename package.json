@@ -1,6 +1,6 @@
 {
   "name": "@archprime/lovarch-ds",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "type": "module",
   "private": true,
   "description": "Lovarch Design System V8 — shared submodule (tokens, motion, components, blocks)",

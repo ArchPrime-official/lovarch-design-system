@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.8.1 — 2026-10-24
+
+### Changed
+- Lova animado: o HEVC com alfa (Safari/iOS) vem em **.mp4** (`hvc1`) em vez de .mov — `videoKind()` devolve `"mp4"`. Medido no WebKit: alfa idêntico nos dois contêineres; o WebM VP9 toca no WebKit, mas sem o alfa. O MP4 é o tipo que o storage público aceita.
+
 ## v0.8.0 — 2026-10-24
 
 ### Added

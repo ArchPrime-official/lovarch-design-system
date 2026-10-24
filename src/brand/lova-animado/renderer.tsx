@@ -18,7 +18,7 @@ import type { LovaFrame, LovaInstrument, LovaManifest, LovaPlayerEvent, LovaScre
 
 export interface LovaClipRendererOptions {
   manifest: LovaManifest;
-  /** Onde estão os arquivos (`<base>/<versão>/<256|640>/<clipe>.webm|.mov|.png`). */
+  /** Onde estão os arquivos (`<base>/<versão>/<256|640>/<clipe>.webm|.mp4|.png`). */
   baseUrl: string;
 }
 

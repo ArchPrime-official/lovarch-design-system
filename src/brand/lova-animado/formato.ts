@@ -3,13 +3,15 @@
  *
  * Vídeo com fundo transparente na web exige dois formatos:
  * - WebM VP9 com alfa → Chrome, Edge, Firefox, Android;
- * - HEVC com alfa (.mov, `hvc1`) → Safari e TODO navegador do iPhone/iPad (são WebKit por baixo).
+ * - HEVC com alfa (`hvc1`, em contêiner MP4) → Safari e TODO navegador do iPhone/iPad (são WebKit por baixo).
+ *   Medido no WebKit (24/10/2026): o mesmo HEVC com alfa toca transparente em .mov e em .mp4; o WebM VP9 toca, mas SEM
+ *   o alfa (fundo preto). O MP4 é o tipo que o storage público aceita (`video/mp4`).
  * O Chrome do Mac também toca HEVC, mas SEM o alfa (o fundo sai preto): por isso a escolha é pelo motor,
  * não pelo `canPlayType`.
  */
 
 export type LovaClipSize = 256 | 640;
-export type LovaClipKind = "webm" | "mov" | "png";
+export type LovaClipKind = "webm" | "mp4" | "png";
 
 export interface NavigatorLike {
   userAgent: string;
@@ -28,10 +30,10 @@ export function prefersHevcAlpha(nav: NavigatorLike | null | undefined): boolean
 }
 
 export function videoKind(nav: NavigatorLike | null | undefined): Exclude<LovaClipKind, "png"> {
-  return prefersHevcAlpha(nav) ? "mov" : "webm";
+  return prefersHevcAlpha(nav) ? "mp4" : "webm";
 }
 
-/** `<base>/<versão>/<tamanho>/<clipe>.<webm|mov|png>` — a versão no caminho permite cache imutável. */
+/** `<base>/<versão>/<tamanho>/<clipe>.<webm|mp4|png>` — a versão no caminho permite cache imutável. */
 export function clipUrl(base: string, version: string, size: LovaClipSize, name: string, kind: LovaClipKind): string {
   const b = base.replace(/\/+$/, "");
   return `${b}/${encodeURIComponent(version)}/${size}/${encodeURIComponent(name)}.${kind}`;
