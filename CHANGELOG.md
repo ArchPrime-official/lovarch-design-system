@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.7.0 — 2026-10-24
+
+### Added
+- `/brand`: `LovaMascot` (corpo inteiro) e `LovaAvatar` (rostinho 24–36 px) — o mascote do agente Lova, com os estados da interface (`idle`, `listening`, `thinking`/`working`, `delivered`, `happy`, `shy`, `sad`), as artes OFICIAIS sem fundo em WebP com alfa (corpo 600 px ≤ 28 KB, rosto 112 px ≤ 4 KB), movimento sutil opcional (respira, pisca, pulinho ao entregar) parado com `prefers-reduced-motion`, `lovaArt()` e `LOVA_ASSETS`. Doc em `docs/brand.md` e demo na seção «Marca».
+
 ## v0.6.4 — 2026-10-20
 
 ### Added

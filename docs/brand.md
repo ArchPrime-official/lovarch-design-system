@@ -142,3 +142,42 @@ Props: `label` (obrigatório, já traduzido) · `href` (default `https://lovarch
 | `LOVARCH_EMAIL_ANIMATIONS` | GIFs dos e-mails de ativação (inbox, social, WhatsApp) | e-mails transacionais |
 
 Linhas sempre na cor do texto (`currentColor`); o dourado é só o hub. Mark3D ≠ loader — não troque um pelo outro.
+
+## Lova — o mascote do agente (v0.7.0)
+
+O **Lova** é o agente principal da Lovarch (bíblia aprovada em 23/10/2026). Ele tem rosto: o hexágono do símbolo em
+silicone branco, luz quente por dentro, boina preta e **sempre a pinta de coração dourada**. As artes são os renders
+oficiais da Sandra, só com o fundo tirado (rembg/BiRefNet local, sem API paga) — **nunca redesenhe, nunca gere outra
+pose com IA, nunca corte a pinta**.
+
+```tsx
+import { LovaMascot, LovaAvatar } from "@archprime/lovarch-ds/brand";
+
+<LovaMascot state="idle" height={160} animated priority />   // início do chat
+<LovaMascot state="thinking" height={64} animated label="Lova" /> // cantinho com a barra oculta
+<LovaAvatar state="delivered" size={28} />                     // ao lado de uma resposta
+```
+
+| `state` | Arte | Quando |
+|---|---|---|
+| `idle` | branco, olhos abertos | esperando |
+| `listening` | = `idle` (até a animação da L7) | a pessoa está digitando ou falando |
+| `thinking` / `working` | translúcido, o símbolo aceso por dentro | montando o plano, executando, com fila |
+| `delivered` | aceso por inteiro (com `animated`, dá um pulinho) | terminou |
+| `happy` | feliz | comemoração leve |
+| `shy` | tímido (mãos na boca, brilhinhos) | recebeu um elogio |
+| `sad` | triste | errou — e em seguida mostra a correção |
+
+«Bravo» e «sem paciência» **não existem** aqui: nunca são dirigidos à pessoa.
+
+| Arquivo (`src/brand/assets/lova/`) | Tamanho | Peso |
+|---|---|---|
+| `lova-<estado>.webp` (corpo, alfa) | 600 px de altura | 16–28 KB |
+| `lova-<estado>-face.webp` (rosto, alfa) | 112×112 | 3–4 KB |
+
+- **Movimento** (`animated`): respira (4,2 s), pisca a cada ~5 s (pálpebra da cor da pele só no repouso e no aceso) e
+  pula uma vez ao virar `delivered`. Com `prefers-reduced-motion` fica parado.
+- **Acessibilidade**: decorativo por padrão (`aria-hidden`); com `label` vira `role="img"`. Num botão, o nome vai no
+  botão («Mostra Lova»), não na imagem.
+- **Tamanhos**: rosto 24–36 px; corpo 56–72 px no cantinho, 120–170 px no início.
+- **Fundo**: a arte é recortada — funciona no claro e no escuro sem moldura. Não ponha círculo nem sombra colorida.
