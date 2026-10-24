@@ -150,6 +150,11 @@ silicone branco, luz quente por dentro, boina preta e **sempre a pinta de coraç
 oficiais da Sandra recortados com alfa (exportação do Claude Design de 24/10/2026) — **nunca redesenhe, nunca gere
 outra pose com IA, nunca corte a pinta, nunca estique** (só escala uniforme, até 1,015).
 
+«Nunca estique» vale para o **corpo** (o hexágono não estica, só inclina, gira, sobe e desce; no máximo um amassado de
+2–4% ao pousar de um pulo) e para a **mídia na tela** (imagem ou vídeo sempre na proporção original). Os **braços** são
+de borracha: nos clipes do rig 3D eles alongam até ~2× com o volume preservado para abraçar, pôr a mão no peito ou
+alcançar algo (decisão do Pablo, 24/10/2026). Mudar de forma (compasso, casinha…) é sempre pela luz.
+
 ```tsx
 import { LovaMascot, LovaAvatar, LOVA_ASSETS } from "@archprime/lovarch-ds/brand";
 
