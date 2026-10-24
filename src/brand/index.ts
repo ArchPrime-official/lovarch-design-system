@@ -47,3 +47,5 @@ export {
   type LovarchBrandAsset,
   type LovarchRasterVariant,
 } from "./assets";
+
+export * from "./lova-animado";

@@ -193,3 +193,9 @@ simulam com máscara sobre a arte.
   botão («Mostra Lova»), não na imagem. Com `prefers-reduced-motion` tudo fica parado.
 - **Tamanhos**: rosto 24–36 px; corpo 56 (celular) / 72 (desktop) no cantinho, 120–150 px no início.
 - **Fundo**: a arte é recortada — funciona no claro e no escuro sem moldura. Não ponha círculo nem sombra colorida.
+
+### Lova animado (v0.8.0)
+
+Os clipes do rig 3D (fundo transparente) entram no lugar das artes paradas pelo `LovaRendererContext`, sem mudar
+quem usa: `createLovaClipRenderer({ manifest, baseUrl })`. Estados, formas por tela, formatos e as regras (corta só no
+fim do clipe, piscada a cada 2–6 s, sempre pela luz para mudar de forma): **`docs/lova-animado.md`**.
