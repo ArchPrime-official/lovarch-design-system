@@ -39,12 +39,12 @@ Regras da máquina (`maquina.ts`, pura e testada):
 
 ## Formatos e arquivos
 
-`<base>/<versão>/<256|640>/<clipe>.webm|.mov|.png` — a versão no caminho permite cache imutável.
+`<base>/<versão>/<256|640>/<clipe>.webm|.mp4|.png` — a versão no caminho permite cache imutável.
 
 | Navegador | Arquivo |
 |---|---|
 | Chrome, Edge, Firefox, Android | WebM VP9 com alfa (`.webm`) |
-| Safari e qualquer navegador do iPhone/iPad (WebKit) | HEVC com alfa, `hvc1` (`.mov`) — o Chrome do Mac toca HEVC mas sem o alfa, por isso a escolha é pelo motor (`prefersHevcAlpha`) |
+| Safari e qualquer navegador do iPhone/iPad (WebKit) | HEVC com alfa, `hvc1`, em `.mp4` — o WebKit toca o WebM sem o alfa e o Chrome do Mac toca HEVC sem o alfa: por isso a escolha é pelo motor (`prefersHevcAlpha`) |
 
 O tamanho do arquivo segue o tamanho em tela (`sizeFor`: até 300 px reais → 256, acima → 640). O manifesto traz o
 enquadramento (`frame`: onde a boina e os pés caem no quadro) para o corpo ficar com a mesma altura da arte estática.

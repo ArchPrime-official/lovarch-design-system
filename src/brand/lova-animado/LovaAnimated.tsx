@@ -48,7 +48,7 @@ export function usePrefersReducedMotion(): boolean {
 
 export interface LovaAnimatedProps {
   manifest: LovaManifest | null | undefined;
-  /** Onde estão os arquivos (`<base>/<versão>/<256|640>/<clipe>.webm|.mov|.png`). */
+  /** Onde estão os arquivos (`<base>/<versão>/<256|640>/<clipe>.webm|.mp4|.png`). */
   baseUrl: string;
   /** Lado em px na tela (o desenho é quadrado). O arquivo (256 ou 640) é escolhido por isto. */
   size?: number;
