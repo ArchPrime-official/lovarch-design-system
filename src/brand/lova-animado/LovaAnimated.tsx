@@ -123,20 +123,27 @@ export function LovaAnimated({
   if (!manifest) {
     return <span className={cn("inline-block", className)} style={caixa} aria-hidden={!label} aria-label={label}>{fallback}</span>;
   }
+  // A mídia (pôster ou vídeo) SEMPRE enche uma caixa <span> do tamanho do quadro — nunca é ela a caixa: o preflight do
+  // Tailwind põe `max-width: 100%` em todo img/video, e um <img> de 50 px num pai de 24 px virava uma fatia de 24×50
+  // (o rostinho do chip, 24/10/2026). `max-w-none` + inline garantem o quadro quadrado em qualquer CSS.
+  const midia = { maxWidth: "none", maxHeight: "none" } as const;
   if (parado) {
     const poster = clipUrl(baseUrl, manifest.version, tam, posterFor(manifest, screen, state, instrument), "png");
     return (
-      <img src={poster} alt={label ?? ""} aria-hidden={!label} width={size} height={size} draggable={false}
-        className={cn("inline-block select-none object-contain", className)} style={caixa} />
+      <span role={label ? "img" : undefined} aria-label={label} aria-hidden={!label}
+        className={cn("relative inline-block shrink-0 select-none", className)} style={caixa} data-lova-quadro="">
+        <img src={poster} alt="" aria-hidden draggable={false} decoding="async"
+          className="pointer-events-none absolute inset-0 block size-full max-w-none object-contain" style={midia} />
+      </span>
     );
   }
   const video = (ref: typeof aRef) => (
     <video ref={ref} muted playsInline disablePictureInPicture preload="none" aria-hidden
-      className="pointer-events-none absolute inset-0 size-full object-contain" style={{ opacity: 0 }} />
+      className="pointer-events-none absolute inset-0 size-full max-w-none object-contain" style={{ ...midia, opacity: 0 }} />
   );
   return (
     <span role={label ? "img" : undefined} aria-label={label} aria-hidden={!label}
-      className={cn("relative inline-block shrink-0 select-none", className)} style={caixa}>
+      className={cn("relative inline-block shrink-0 select-none", className)} style={caixa} data-lova-quadro="">
       {video(aRef)}
       {video(bRef)}
     </span>
