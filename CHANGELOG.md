@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.8.0 — 2026-10-24
+
+### Added
+- `/brand`: **Lova animado** — `LovaAnimated` (o mascote vivo em clipes do rig 3D do Blender, fundo transparente), a máquina de estados pura (`startPlayer`, `advance`, `dispatch`, `setScreen`: repouso que nunca para e pisca a cada 2–6 s, pensando translúcido, entregou, precisa de você com o cartãozinho, tímido, triste, e as formas por tela — compasso, casinha — sempre passando pela luz), o controlador de dois `<video>` que corta sem pulo (`LovaVideoController`), a escolha do formato pelo motor (WebM VP9 alfa × HEVC alfa para WebKit) e `createLovaClipRenderer`, que liga tudo isso no `LovaRendererContext` do `LovaMascot`/`LovaAvatar` sem mudar quem usa. `prefers-reduced-motion` = pôster parado; aba oculta = pausa; pré-carrega só o próximo clipe. Doc em `docs/lova-animado.md`.
+
 ## v0.7.0 — 2026-10-24
 
 ### Added
