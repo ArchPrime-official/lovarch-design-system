@@ -7,7 +7,7 @@
  */
 export { LovaAnimated, posterFor, toPlayerEvent, usePrefersReducedMotion, type LovaAnimatedProps } from "./LovaAnimated";
 export {
-  bodyLayout, createLovaClipRenderer, faceLayout, LOVA_FACE_CROP, LOVA_FORM_INSTRUMENT, LOVA_FORM_SCREEN, LovaClipView, mascotEvent,
+  bodyLayout, createLovaClipRenderer, FACE_STILL, faceLayout, LOVA_FACE_CROP, LOVA_FORM_INSTRUMENT, LOVA_FORM_SCREEN, LovaClipView, mascotEvent,
   type LovaClipRendererOptions,
 } from "./renderer";
 export { LovaVideoController, sameUrl, type LovaControllerOptions, type VideoLike } from "./controlador";

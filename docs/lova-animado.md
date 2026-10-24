@@ -11,7 +11,7 @@ import manifest from "./lova-clipes.json";           // gerado junto com os clip
 const renderer = useMemo(() => createLovaClipRenderer({ manifest, baseUrl: "/lova" }), []);
 <LovaRendererContext.Provider value={renderer}>
   <LovaMascot state={estado} form="compass" height={150} animated />   // corpo: mesma altura da arte estática
-  <LovaAvatar state={estado} size={28} />                              // rostinho recortado do clipe, pisca
+  <LovaAvatar state={estado} size={28} />                              // rostinho recortado do clipe (em repouso: o pôster)
 </LovaRendererContext.Provider>
 ```
 
