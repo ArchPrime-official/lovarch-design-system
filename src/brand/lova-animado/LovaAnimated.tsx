@@ -118,7 +118,8 @@ export function LovaAnimated({
     if (state) ctrl.current?.send(toPlayerEvent(state), instrument);
   }, [state, instrument, stateKey]);
 
-  const caixa: CSSProperties = { ...style, width: size, height: size };
+  // o `style` de quem usa pode trocar a caixa (ex.: o corpo em % da caixa do LovaMascot)
+  const caixa: CSSProperties = { width: size, height: size, ...style };
   if (!manifest) {
     return <span className={cn("inline-block", className)} style={caixa} aria-hidden={!label} aria-label={label}>{fallback}</span>;
   }
