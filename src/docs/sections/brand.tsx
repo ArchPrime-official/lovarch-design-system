@@ -5,6 +5,9 @@ import { LovarchMark3D } from "../../brand/LovarchMark3D";
 import { LOVARCH_EMAIL_ANIMATIONS } from "../../brand/assets";
 import { LovarchSymbolLoader } from "../../feedback/lovarch-loader";
 import { PoweredByLovarch } from "../../brand/PoweredByLovarch";
+import { LovaMascot, LovaAvatar, type LovaState } from "../../brand/LovaMascot";
+
+const LOVA_STATES: LovaState[] = ["idle", "thinking", "delivered", "happy", "praised", "error"];
 import { Mono } from "../../primitives";
 import { Section, Demo, Grid, Rules, Rule, Spec, Code } from "../shared";
 
@@ -70,6 +73,29 @@ export function BrandSection() {
         <p className="mt-3 text-caption text-muted-foreground">
           Mark3D = presença da marca (login, splash, páginas de marca, fim de vídeo). SymbolLoader = o sistema está trabalhando. Nunca troque um pelo outro, e nunca pinte as linhas de dourado — o dourado é só o hub.
         </p>
+      </Demo>
+      <Demo title="Lova — o mascote do agente" note="LovaMascot (corpo) · LovaAvatar (rostinho 24–36 px) · artes oficiais sem fundo · animated = respira e pisca">
+        <Grid cols={2}>
+          <div className="rounded-xl border border-line bg-background p-5">
+            <div className="flex flex-wrap items-end gap-4">
+              {LOVA_STATES.map((s) => (
+                <div key={s} className="flex flex-col items-center gap-1"><LovaMascot state={s} height={96} animated /><span className="font-mono text-micro text-muted-foreground">{s}</span></div>
+              ))}
+            </div>
+            <div className="mt-4 flex items-center gap-3">
+              {[24, 28, 36].map((n) => <LovaAvatar key={n} size={n} />)}
+              <LovaAvatar state="thinking" size={28} />
+              <LovaAvatar state="delivered" size={28} />
+              <span className="text-caption text-muted-foreground">rostinho 24 · 28 · 36</span>
+            </div>
+          </div>
+          <div className="rounded-xl border border-line bg-[hsl(240_10%_4%)] p-5">
+            <div className="flex flex-wrap items-end gap-4">
+              {LOVA_STATES.map((s) => <LovaMascot key={s} state={s} height={96} />)}
+            </div>
+            <p className="mt-4 text-caption text-[hsl(240_5%_65%)]">recortado: claro e escuro sem moldura · sempre com a pinta de coração</p>
+          </div>
+        </Grid>
       </Demo>
       <Demo title="Animações de e-mail" note="GIFs dos e-mails de ativação de módulo">
         <Grid cols={3}>

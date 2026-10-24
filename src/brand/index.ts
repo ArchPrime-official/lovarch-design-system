@@ -6,6 +6,7 @@
  *   import { LOVARCH_OG_IMAGE_URL, LOVARCH_EMAIL_LOGO_DARK_URL } from "@archprime/lovarch-ds/brand";
  *
  * Animated mark (login/splash hero): `LovarchMark3D` — exported here.
+ * Lova, the agent mascot: `LovaMascot` (full body) and `LovaAvatar` (face, 24–36 px).
  * For the animated symbol as LOADING state, import from `/feedback`:
  *   import { LovarchSymbolLoader } from "@archprime/lovarch-ds/feedback";
  *
@@ -22,6 +23,10 @@ export {
 export { LovarchSymbol } from "./LovarchSymbol";
 export { LovarchMark3D, type LovarchMark3DProps } from "./LovarchMark3D";
 export { PoweredByLovarch, type PoweredByLovarchProps } from "./PoweredByLovarch";
+export {
+  LovaMascot, LovaAvatar, lovaArt, lovaMotion, LOVA_ASSETS, LovaRendererContext,
+  type LovaState, type LovaForm, type LovaRenderer, type LovaRenderProps, type LovaMascotProps, type LovaAvatarProps,
+} from "./LovaMascot";
 export {
   LOVARCH_TAGLINE,
   LOVARCH_LOGO_HORIZONTAL_DARK_URL,

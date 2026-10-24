@@ -142,3 +142,54 @@ Props: `label` (obrigatório, já traduzido) · `href` (default `https://lovarch
 | `LOVARCH_EMAIL_ANIMATIONS` | GIFs dos e-mails de ativação (inbox, social, WhatsApp) | e-mails transacionais |
 
 Linhas sempre na cor do texto (`currentColor`); o dourado é só o hub. Mark3D ≠ loader — não troque um pelo outro.
+
+## Lova — o mascote do agente (v0.7.0)
+
+O **Lova** é o agente principal da Lovarch (bíblia aprovada em 23/10/2026). Ele tem rosto: o hexágono do símbolo em
+silicone branco, luz quente por dentro, boina preta e **sempre a pinta de coração dourada**. As artes são os renders
+oficiais da Sandra recortados com alfa (exportação do Claude Design de 24/10/2026) — **nunca redesenhe, nunca gere
+outra pose com IA, nunca corte a pinta, nunca estique** (só escala uniforme, até 1,015).
+
+```tsx
+import { LovaMascot, LovaAvatar, LOVA_ASSETS } from "@archprime/lovarch-ds/brand";
+
+<LovaMascot state="idle" height={150} animated priority />   // início do chat
+<LovaMascot state="working" height={72} animated />           // cantinho com a barra oculta (56 no celular)
+<LovaAvatar state="delivered" size={28} />                     // ao lado de uma resposta
+<img src={LOVA_ASSETS.light} alt="" />                         // a luz da transição barra ↔ cantinho
+```
+
+| `state` | Arte de hoje | Movimento (`animated`) | Quando |
+|---|---|---|---|
+| `idle` | repouso (branco) | respira 4,8 s | esperando |
+| `listening` | repouso (até a pose «ouvindo») | respira | a pessoa está digitando ou falando |
+| `thinking` / `working` | translúcido, o símbolo aceso por dentro | a luz pulsa 2,4 s | montando o plano, executando, com fila |
+| `speaking` | aceso (até a pose «falando») | respira | a resposta está chegando |
+| `delivered` | aceso por inteiro | respira | terminou (rostinho da última resposta) |
+| `needs_approval` | repouso (até a pose «segurando o cartãozinho») + o ponto dourado da tela | respira | um cartão espera o «sì» |
+| `praised` / `shy` | tímido (mãos na boca, brilhinhos) | — | recebeu um elogio |
+| `error` / `sad` | triste | — | errou — e em seguida mostra a correção |
+| `happy` | feliz | pulinho 1,4 s, uma vez | entregou (no cantinho) |
+
+**Forma** (`form`: `lova` · `compass` · `scale_ruler` · `house` · `helmet`): o Lova vira o instrumento da tarefa
+(Progetta → compasso, orçamento → escalímetro, render → casinha, obra → capacete). Estático hoje: todas desenham o
+Lova; a forma vai no `data-lova-form` e no renderizador.
+
+**Renderizador trocável**: `renderer` (prop) ou `LovaRendererContext` (árvore inteira) recebem
+`{ state, form, variant: "body" | "face", size, animated, priority }` e desenham no lugar da arte estática — é por aí
+que entra o Lova animado (clipes com alfa + máquina de estados) sem mudar quem usa `LovaMascot`/`LovaAvatar`.
+
+«Bravo» e «sem paciência» **não existem** aqui: nunca são dirigidos à pessoa. Piscar, olhar de lado, acenar, ajeitar a
+boina, segurar o cartãozinho («precisa de você»), ouvir e falar **esperam as poses novas** da equipe 3D — não se
+simulam com máscara sobre a arte.
+
+| Arquivo (`src/brand/assets/lova/`) | Tamanho | Peso |
+|---|---|---|
+| `lova-<estado>.webp` (corpo, alfa) | 600 px de altura | 24–54 KB |
+| `lova-<estado>-face.webp` (rosto, alfa) | 128×128 | 4–9 KB |
+| `lova-light.webp` (a luz da transição) | 240×240 | 18 KB |
+
+- **Acessibilidade**: decorativo por padrão (`aria-hidden`); com `label` vira `role="img"`. Num botão, o nome vai no
+  botão («Mostra Lova»), não na imagem. Com `prefers-reduced-motion` tudo fica parado.
+- **Tamanhos**: rosto 24–36 px; corpo 56 (celular) / 72 (desktop) no cantinho, 120–150 px no início.
+- **Fundo**: a arte é recortada — funciona no claro e no escuro sem moldura. Não ponha círculo nem sombra colorida.
