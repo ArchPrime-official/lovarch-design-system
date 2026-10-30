@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.8.6 — 2026-10-30
+
+### Fixed
+- Lova animado: na passagem do rostinho **parado → animado** (o chat começando a pensar) a caixa ficava ~6 quadros vazia: até o 1º quadro o componente mostrava o pôster do estado NOVO (ex.: «pensando»), que ainda estava baixando. Agora mostra o pôster do primeiro clipe que vai tocar — o repouso da tela, que é a mesma imagem do parado e já está carregada (o player só corta no fim de um clipe, então o estado novo entra depois dele). O pôster de repouso fica sempre no DOM (escondido depois do 1º quadro).
+
 ## v0.8.5 — 2026-10-30
 
 ### Fixed

@@ -4,8 +4,10 @@
  * Os clipes (render do rig 3D no Blender, fundo transparente) vêm do app: o componente recebe o manifesto e a URL
  * base. Sem manifesto, com `prefers-reduced-motion` ou se o vídeo falhar, mostra o pôster parado (ou o `fallback`).
  * A aba oculta pausa o vídeo; só o PRÓXIMO clipe provável é pré-carregado. Até o primeiro quadro do vídeo estar na
- * tela, o pôster do estado fica no lugar (antes a caixa ficava vazia nesse intervalo: o «pisca» ao montar e ao passar
- * do rostinho parado para o animado). O pôster de repouso fica carregado para a volta ao parado não piscar.
+ * tela, fica no lugar o pôster do PRIMEIRO clipe que vai tocar — o repouso da tela, porque o player só corta no fim de
+ * um clipe e o estado novo entra depois dele. É a mesma imagem do rostinho parado, já carregada: a passagem do parado
+ * ao animado não deixa a caixa vazia (com o pôster do estado novo, ainda baixando, ficava ~6 quadros vazia — medido no
+ * staging em 30/10/2026). O pôster de repouso fica sempre carregado para a volta ao parado também não piscar.
  *
  * Uso:
  *   <LovaAnimated manifest={LOVA_CLIPS} baseUrl="/lova" size={64} screen="progetta"
@@ -133,8 +135,8 @@ export function LovaAnimated({
   // Tailwind põe `max-width: 100%` em todo img/video, e um <img> de 50 px num pai de 24 px virava uma fatia de 24×50
   // (o rostinho do chip, 24/10/2026). `max-w-none` + inline garantem o quadro quadrado em qualquer CSS.
   const midia = { maxWidth: "none", maxHeight: "none" } as const;
-  const poster = clipUrl(baseUrl, manifest.version, tam, posterFor(manifest, screen, state, instrument), "png");
   if (parado) {
+    const poster = clipUrl(baseUrl, manifest.version, tam, posterFor(manifest, screen, state, instrument), "png");
     return (
       <span role={label ? "img" : undefined} aria-label={label} aria-hidden={!label}
         className={cn("relative inline-block shrink-0 select-none", className)} style={caixa} data-lova-quadro="">
@@ -147,17 +149,16 @@ export function LovaAnimated({
     <video ref={ref} muted playsInline disablePictureInPicture preload="none" aria-hidden
       className="pointer-events-none absolute inset-0 size-full max-w-none object-contain" style={{ ...midia, opacity: 0 }} />
   );
+  // o repouso da tela: o 1º clipe que toca (até o 1º quadro) e o pôster da volta ao parado — sempre carregado
   const repouso = clipUrl(baseUrl, manifest.version, tam, posterFor(manifest, screen), "png");
   return (
     <span role={label ? "img" : undefined} aria-label={label} aria-hidden={!label}
       className={cn("relative inline-block shrink-0 select-none", className)} style={caixa} data-lova-quadro=""
       data-lova-pronto={pronto ? "" : undefined}>
-      {!pronto && (
-        <img src={poster} alt="" aria-hidden draggable={false} decoding="async" data-lova-poster=""
-          className="pointer-events-none absolute inset-0 block size-full max-w-none object-contain" style={midia} />
-      )}
-      {/* a volta ao parado (rostinho em repouso) usa este pôster: já carregado, ela não pisca */}
-      {repouso !== poster && <img src={repouso} alt="" aria-hidden hidden />}
+      {pronto
+        ? <img src={repouso} alt="" aria-hidden hidden />
+        : <img src={repouso} alt="" aria-hidden draggable={false} decoding="async" data-lova-poster=""
+            className="pointer-events-none absolute inset-0 block size-full max-w-none object-contain" style={midia} />}
       {video(aRef)}
       {video(bRef)}
     </span>
