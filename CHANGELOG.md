@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.8.5 — 2026-10-30
+
+### Fixed
+- Lova animado: o **pisca** na troca de clipe. Medido no staging: o vídeo que estava na tela recebia o PRÓXIMO clipe (`src` + `load()`) antes de o novo começar a tocar, e ficava visível sem imagem (`readyState 0`) por um quadro. Agora o controlador só carrega no vídeo que saiu depois de escondê-lo, e só troca de vídeo quando o novo já tem um quadro apresentado (`requestVideoFrameCallback`; sem ele, o `playing` com imagem; prazo de reserva `SWAP_FALLBACK_MS` = 150 ms). Um evento no meio da troca só replaneja.
+- Lova animado: ao montar (e ao passar do rostinho parado para o animado) a caixa ficava vazia até o 1º quadro. Agora o pôster do estado fica no lugar até lá (`onReady`, `data-lova-pronto`), e o pôster de repouso fica pré-carregado para a volta ao parado.
+- `LovaMascot` com renderizador (o Lova animado, quadro quadrado): a largura da caixa não muda mais com o estado — a proporção de cada arte parada (feliz é mais larga) fazia o Lova pular de lado a cada reação.
+
 ## v0.8.4 — 2026-10-24
 
 ### Fixed

@@ -127,7 +127,9 @@ export function LovaMascot({ state = "idle", form = "lova", renderer, height = 1
   const custom = renderer ?? ctxRenderer;
   const art = lovaArt(state);
   const kind = animated && !reduced ? lovaMotion(art.key) : null;
-  const width = Math.round(height * art.ratio);
+  // com o renderizador (o Lova animado, quadro quadrado) a caixa não muda com o estado: a largura de cada arte parada
+  // (feliz é mais larga que o repouso) fazia o Lova pular de lado a cada reação
+  const width = Math.round(height * (custom ? ART.idle.ratio : art.ratio));
   return (
     <span
       className={cn("relative inline-block shrink-0 select-none", className)}
