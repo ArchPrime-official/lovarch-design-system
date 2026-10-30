@@ -2,8 +2,11 @@
  * Lova animado — o controlador dos dois `<video>` (sem React; testável com vídeos de mentira).
  *
  * Dois vídeos empilhados: um toca na frente, o outro espera atrás já carregado com o PRÓXIMO clipe (só o próximo
- * provável, nada mais). Quando o da frente termina, o de trás começa e só então troca de lugar — o último quadro do
- * clipe que acabou fica na tela até o novo estar tocando, então nunca aparece um quadro vazio.
+ * provável, nada mais). Quando o da frente termina, o de trás começa e só troca de lugar quando JÁ TEM UM QUADRO NA TELA
+ * (`requestVideoFrameCallback`; sem ele, o `playing` com imagem) — o último quadro do clipe que acabou fica na tela até
+ * lá. O vídeo que saiu só recebe o clipe seguinte DEPOIS de escondido: carregar nele antes apagava o quadro que ainda
+ * estava visível (o «pisca» medido no staging em 30/10/2026: vídeo visível com readyState 0 na troca). Pelo mesmo
+ * motivo, um evento no meio da troca só replaneja; o carregamento espera a troca terminar.
  */
 import {
   advance, dispatch, setScreen, startPlayer,
@@ -20,7 +23,14 @@ export interface VideoLike {
   load(): void;
   addEventListener(type: string, fn: () => void): void;
   removeEventListener(type: string, fn: () => void): void;
+  /** 0–4 (HTMLMediaElement); ≥ 2 = há um quadro para mostrar. */
+  readonly readyState?: number;
+  /** Chama `cb` quando um quadro novo deste vídeo é apresentado (Chrome, Safari 15.4+, Firefox 132+). */
+  requestVideoFrameCallback?: (cb: () => void) => number;
 }
+
+/** Sem `requestVideoFrameCallback` apresentado em tanto tempo, troca mesmo assim (aba sem pintura, navegador antigo). */
+export const SWAP_FALLBACK_MS = 150;
 
 export interface LovaControllerOptions {
   a: VideoLike;
@@ -33,6 +43,8 @@ export interface LovaControllerOptions {
   onClip?: (clip: string, state: LovaPlayerState) => void;
   /** Um vídeo falhou (formato, rede): a tela mostra o Lova parado. */
   onError?: () => void;
+  /** O primeiro quadro do primeiro clipe está na tela: quem mostrava o pôster pode tirá-lo. */
+  onReady?: () => void;
 }
 
 export class LovaVideoController {
@@ -43,6 +55,8 @@ export class LovaVideoController {
   private readonly rnd: () => number;
   private paused = false;
   private destroyed = false;
+  /** O vídeo que entrou e ainda não apareceu (o que saiu continua visível até lá). */
+  private entrando: VideoLike | null = null;
   private readonly handlers: Array<[VideoLike, string, () => void]> = [];
 
   constructor(private readonly o: LovaControllerOptions) {
@@ -62,11 +76,20 @@ export class LovaVideoController {
     this.handlers.push([v, type, fn]);
   }
 
-  /** Monta o primeiro clipe na frente e o próximo atrás. */
+  /** Monta o primeiro clipe na frente e o próximo atrás. A frente só aparece com o 1º quadro (até lá, o pôster). */
   start(): void {
-    this.mostra(this.front, this.back);
-    this.carrega(this.front, this.state.current, "auto");
-    this.toca(this.front);
+    const primeiro = this.front;
+    this.esconde(primeiro);
+    this.esconde(this.back);
+    this.carrega(primeiro, this.state.current, "auto");
+    this.entrando = primeiro;
+    this.quandoTemQuadro(primeiro, () => {
+      if (this.front !== primeiro) return;
+      this.entrando = null;
+      this.mostra(primeiro, this.back);
+      this.o.onReady?.();
+    });
+    this.toca(primeiro);
     this.o.onClip?.(this.state.current, this.state);
     this.carrega(this.back, this.pending.current, "auto");
   }
@@ -104,10 +127,11 @@ export class LovaVideoController {
     this.state = { ...novo, current: this.state.current, place: this.state.place, sinceBlink: this.state.sinceBlink };
     const antes = this.pending.current;
     this.pending = advance(this.state, this.rnd);
-    if (this.pending.current !== antes) this.carrega(this.back, this.pending.current, "auto");
+    // no meio de uma troca o de trás ainda é o que está na tela: quem carrega é o fim da troca
+    if (this.pending.current !== antes && !this.entrando) this.carrega(this.back, this.pending.current, "auto");
   }
 
-  /** O clipe da frente terminou: o de trás entra. */
+  /** O clipe da frente terminou: o de trás entra (e só troca de lugar com um quadro na tela). */
   next(): void {
     if (this.destroyed) return;
     const entra = this.back;
@@ -118,23 +142,46 @@ export class LovaVideoController {
     entra.currentTime = 0;
     this.front = entra;
     this.back = sai;
+    this.entrando = entra;
     const troca = () => {
-      entra.removeEventListener("playing", troca);
-      if (this.front === entra) this.mostra(entra, sai);
+      if (this.destroyed || this.front !== entra) return;
+      this.entrando = null;
+      this.mostra(entra, sai);
+      // só agora, com o que saiu escondido, ele recebe o clipe seguinte
+      this.carrega(sai, this.pending.current, "auto");
     };
-    entra.addEventListener("playing", troca);
-    if (!this.paused) this.toca(entra);
-    else troca();
     this.o.onClip?.(this.state.current, this.state);
     this.pending = advance(this.state, this.rnd);
-    this.carrega(sai, this.pending.current, "auto");
+    if (this.paused) troca();
+    else {
+      this.quandoTemQuadro(entra, troca);
+      this.toca(entra);
+    }
+  }
+
+  /** `fn` uma vez, quando `v` já tem um quadro apresentado: `playing` + `requestVideoFrameCallback` (com prazo). */
+  private quandoTemQuadro(v: VideoLike, fn: () => void): void {
+    let feito = false;
+    const uma = () => { if (!feito && !this.destroyed) { feito = true; fn(); } };
+    const tocando = () => {
+      v.removeEventListener("playing", tocando);
+      if (typeof v.requestVideoFrameCallback === "function") {
+        v.requestVideoFrameCallback(uma);
+        setTimeout(() => { if ((v.readyState ?? 4) >= 2) uma(); }, SWAP_FALLBACK_MS);
+      } else uma();
+    };
+    v.addEventListener("playing", tocando);
   }
 
   private mostra(frente: VideoLike, tras: VideoLike) {
     frente.style.opacity = "1";
     frente.style.zIndex = "1";
-    tras.style.opacity = "0";
-    tras.style.zIndex = "0";
+    this.esconde(tras);
+  }
+
+  private esconde(v: VideoLike) {
+    v.style.opacity = "0";
+    v.style.zIndex = "0";
   }
 
   private carrega(v: VideoLike, clip: string, preload: string) {
